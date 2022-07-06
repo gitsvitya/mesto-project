@@ -1,0 +1,26 @@
+.profile__name {
+  margin: 0;
+  padding: 0;
+  color: #FFFFFF;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 48px;
+  max-width: 294px;
+  max-height: 39px;
+  padding-right: 18px;
+  padding-bottom: 16px;
+  transition: all 0.5s linear;
+}
+
+@media (max-width: 650px) {
+  .profile__name {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 27px;
+    line-height: 33px;
+    text-align: center;
+    padding-right: 10px;
+    padding-bottom: 0;
+  }
+}
