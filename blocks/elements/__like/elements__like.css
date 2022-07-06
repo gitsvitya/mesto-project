@@ -2,8 +2,8 @@
   background-image: url('../../../images/like.svg');
   background-position: left center;
   background-repeat: no-repeat;
-  height: 20px;
-  width: 22px;
+  min-height: 20px;
+  min-width: 22px;
   margin: 0;
   padding: 0;
   border: 0;

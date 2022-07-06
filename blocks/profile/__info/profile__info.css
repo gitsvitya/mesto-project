@@ -15,7 +15,7 @@
     padding-top: 26px;
     flex-direction: row;
     padding-left: 0;
-    flex-wrap: wrap;
     justify-content: center;
+    padding-bottom: 36px;
   }
 }

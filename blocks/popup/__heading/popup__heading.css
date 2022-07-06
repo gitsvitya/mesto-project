@@ -6,6 +6,8 @@
   color: #000000;
   padding-top: 34px;
   transition: all 0.5s linear;
+  padding-right: 28px;
+  min-width: 330px;
 }
 
 @media (max-width: 650px) {
