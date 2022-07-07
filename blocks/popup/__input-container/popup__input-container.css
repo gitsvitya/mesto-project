@@ -8,7 +8,6 @@
 
 @media (max-width: 650px) {
   .popup__input-container {
-    max-height: 322px;
     max-width: 238px;
   }
 }

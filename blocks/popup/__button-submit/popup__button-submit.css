@@ -1,12 +1,20 @@
 .popup__button-submit {
   background-color: #000000;
   border-radius: 2px;
-  max-height: 50px;
+  min-height: 50px;
+  min-width: 358px;
   padding: 48px 0 37px 0;
   background-clip: content-box;
   box-sizing: content-box; 
   border: 0;
   transition: all 0.5s linear;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #FFFFFF;
+
 }
 
 .popup__button-submit:hover {
@@ -16,8 +24,13 @@
 
 @media (max-width: 650px) {
   .popup__button-submit {
+    font-size: 14px;
+    line-height: 17px;
     padding-top: 45px;
-    max-height: 46px;
+    padding-bottom: 25px;
+    min-width: 0;
+    min-height: 0;
+    min-height: 46px;
     max-width: 238px;
   }
 }

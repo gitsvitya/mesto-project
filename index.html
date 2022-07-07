@@ -21,75 +21,63 @@
       <div class="profile__area">
         <div class="profile__avatar"></div>
         <div class="profile__info">
-          <p class="profile__name">Жак-Ив Кусто</p>
-          <button class="profile__edit-button"></button>
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <button type="button" class="profile__edit-button"></button>
           <p class="profile__description">Исследователь океана</p>
         </div>
       </div>
-      <button class="profile__add-button"></button>
+      <button type="button" class="profile__add-button"></button>
     </section>
     <section class="elements">
-      <div class="elements__element">
-        <div class="elements__info">
+      <ul class="elements__list">
+      <li class="elements__element">
           <img src="./images/karachevsk.jpg" alt="Церковь в Карачаевске" class="elements__picture">
-          <p class="elements__name">Карачаевск</p>
-          <button class="elements__like"></button>
-        </div>
-      </div>
-      <div class="elements__element">
-        <div class="elements__info">
+          <h2 class="elements__name">Карачаевск</h2>
+          <button type="submit" class="elements__like"></button>
+      </li>
+      <li class="elements__element">
           <img src="./images/elbrus.jpg" alt="Вид на Эльбрус" class="elements__picture">
-          <p class="elements__name">Гора Эльбрус</p>
-          <button class="elements__like"></button>
-        </div>
-      </div>
-      <div class="elements__element">
-        <div class="elements__info">
+          <h2 class="elements__name">Гора Эльбрус</h2>
+          <button type="submit" class="elements__like"></button>
+      </li>
+      <li class="elements__element">
           <img src="./images/dombay.jpg" alt="Вид на Домбай" class="elements__picture">
-          <p class="elements__name">Домбай</p>
-          <button class="elements__like"></button>
-        </div>
-      </div>
-      <div class="elements__element">
-        <div class="elements__info">
+          <h2 class="elements__name">Домбай</h2>
+          <button type="submit" class="elements__like"></button>
+      </li>
+      <li class="elements__element">
           <img src="./images/elbrus.jpg" alt="Вид на Эльбрус" class="elements__picture">
-          <p class="elements__name">Гора Эльбрус</p>
-          <button class="elements__like"></button>
-        </div>
-      </div>
-      <div class="elements__element">
-        <div class="elements__info">
+          <h2 class="elements__name">Гора Эльбрус</h2>
+          <button type="submit" class="elements__like"></button>
+      </li>
+      <li class="elements__element">
           <img src="./images/dombay.jpg" alt="Вид на Домбай" class="elements__picture">
-          <p class="elements__name">Домбай</p>
-          <button class="elements__like"></button>
-        </div>
-      </div>
-      <div class="elements__element">
-        <div class="elements__info">
+          <h2 class="elements__name">Домбай</h2>
+          <button type="submit" class="elements__like"></button>
+      </li>
+      <li class="elements__element">
           <img src="./images/karachevsk.jpg" alt="Церковь в Карачаевске" class="elements__picture">
-          <p class="elements__name">Карачаево-Черкесия</p>
-          <button class="elements__like"></button>
-        </div>
-      </div>
+          <h2 class="elements__name">Карачаево-Черкесия</h2>
+          <button type="submit" class="elements__like"></button>
+      </li>
+    </ul>
     </section>
     <section class="popup">
       <div class="popup__container">
-        <img src="./images/close_button.svg" alt="Закрыть всплывающее окно" class="popup__close-icon">
-        <form action="#" class="popup__form">
+        <button type="button" class="popup__close-button"></button>
+        <form action="popup_form" class="popup__form">
           <fieldset class="popup__input-container">
-            <label for="#" class="popup__heading">Редактировать профиль</label>
-            <input type="text" name="#" class='popup__profile-name' id="#" placeholder="Жак-Ив Кусто" required>
-            <input type="text" name="#" class='popup__profile-description' id="##" placeholder="Исследователь океана" required>
-            <button type="submit" class="popup__button-submit">
-              <span class="popup__button-text">Сохранить</span>
-            </button>
+            <label for="#" class="popup__heading"><h3 class="popup__heading-text">Редактировать профиль</h3></label>
+            <input type="text" name="popup_profile-name" class='popup__input popup_input_name' placeholder="Жак-Ив Кусто" required>
+            <input type="text" name="popup_profile-description" class='popup__input popup_input_description' placeholder="Исследователь океана" required>
+            <button type="submit" class="popup__button-submit">Сохранить</button>
           </fieldset>
         </form>
       </div>
     </section>
   </main>
   <footer class="footer">
-    <p class="footer__text">&#169; 2020 Mesto Russia</p>
+    <p class="footer__text">&#169; 2022 Mesto Russia</p>
   </footer>
 </body>
 
