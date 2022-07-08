@@ -28,4 +28,8 @@
   .popup__input {
     max-width: 238px;
   }
+  .popup__input:first-of-type {
+    padding-top: 75px;
+    padding-bottom: 9px;
+  }
 }

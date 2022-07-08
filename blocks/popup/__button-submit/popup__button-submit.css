@@ -2,7 +2,7 @@
   background-color: #000000;
   border-radius: 2px;
   min-height: 50px;
-  min-width: 358px;
+  max-width: 358px;
   padding: 48px 0 37px 0;
   background-clip: content-box;
   box-sizing: content-box; 
@@ -28,8 +28,6 @@
     line-height: 17px;
     padding-top: 45px;
     padding-bottom: 25px;
-    min-width: 0;
-    min-height: 0;
     min-height: 46px;
     max-width: 238px;
   }
