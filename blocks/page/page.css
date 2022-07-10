@@ -10,7 +10,7 @@
 }
 
 @media (max-width: 400px) {
-.page {
-  padding: 0;
-}
+  .page {
+    padding: 0;
+  }
 }
