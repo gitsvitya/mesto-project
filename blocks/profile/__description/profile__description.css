@@ -11,6 +11,7 @@
   white-space: nowrap;
   overflow: hidden;
   max-width: 202.68px;
+  min-width: 150px;
 }
 
 @media (max-width: 650px) {

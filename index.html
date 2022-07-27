@@ -28,56 +28,63 @@
       </div>
       <button type="button" class="profile__add-button"></button>
     </section>
+
     <section class="elements">
-      <ul class="elements__list">
-        <li class="elements__element">
-          <img src="./images/karachevsk.jpg" alt="Церковь в Карачаевске" class="elements__picture">
-          <h2 class="elements__name">Карачаевск</h2>
-          <button type="submit" class="elements__like"></button>
-        </li>
-        <li class="elements__element">
-          <img src="./images/elbrus.jpg" alt="Вид на Эльбрус" class="elements__picture">
-          <h2 class="elements__name">Гора Эльбрус</h2>
-          <button type="submit" class="elements__like"></button>
-        </li>
-        <li class="elements__element">
-          <img src="./images/dombay.jpg" alt="Вид на Домбай" class="elements__picture">
-          <h2 class="elements__name">Домбай</h2>
-          <button type="submit" class="elements__like"></button>
-        </li>
-        <li class="elements__element">
-          <img src="./images/elbrus.jpg" alt="Вид на Эльбрус" class="elements__picture">
-          <h2 class="elements__name">Гора Эльбрус</h2>
-          <button type="submit" class="elements__like"></button>
-        </li>
-        <li class="elements__element">
-          <img src="./images/dombay.jpg" alt="Вид на Домбай" class="elements__picture">
-          <h2 class="elements__name">Домбай</h2>
-          <button type="submit" class="elements__like"></button>
-        </li>
-        <li class="elements__element">
-          <img src="./images/karachevsk.jpg" alt="Церковь в Карачаевске" class="elements__picture">
-          <h2 class="elements__name">Карачаево-Черкесия</h2>
-          <button type="submit" class="elements__like"></button>
-        </li>
-      </ul>
-    </section>
-    <section class="popup">
+        <ul class="elements__list">
+          <template id="element__template">
+            <li class="elements__element">
+              <button type="button" class="elements__delete"></button>
+              <img src="#" alt="#" class="elements__picture">
+              <h2 class="elements__name"></h2>
+              <button type="submit" class="elements__like"></button>
+            </li>
+        </template>
+        </ul>
+  </section>
+
+    <section class="popup popup_profile-edit">
       <div class="popup__container">
-        <button type="button" class="popup__close-button"></button>
-        <form action="popup_form" class="popup__form" name="popup_form">
+        <button type="button" class="popup__close-button popup_edit-close-button"></button>
+        <form action="popup_form" class="popup__form popup_edit_form" name="popup_form">
           <h2 class="popup__heading">Редактировать профиль</h2>
           <fieldset class="popup__input-container">
-            <input type="text" name="popup_input-name" class='popup__input' placeholder="Жак-Ив Кусто"
+            <input type="text" name="popup_edit-input-name" class='popup__input' placeholder="Жак-Ив Кусто"
               required>
-            <input type="text" name="popup_input-description" class='popup__input'
+            <input type="text" name="popup_edit-input-description" class='popup__input'
               placeholder="Исследователь океана" required>
-            <button type="submit" class="popup__button-submit">Сохранить</button>
+            <button type="submit" class="popup__button-submit popup_edit-buttion-submit">Сохранить</button>
           </fieldset>
         </form>
       </div>
     </section>
-  </main>
+
+  <section class="popup popup_add-picture">
+    <div class="popup__container">
+      <button type="button" class="popup__close-button popup_add-close-button"></button>
+      <form action="popup_form" class="popup__form popup_add_form" name="popup_form">
+        <h2 class="popup__heading">Новое место</h2>
+        <fieldset class="popup__input-container">
+          <input type="text" name="popup_input-title" class='popup__input ' placeholder="Название"
+            required>
+          <input type="text" name="popup_input-link" class='popup__input'
+            placeholder="Ссылка на картинку" required>
+          <button type="submit" class="popup__button-submit">Создать</button>
+        </fieldset>
+      </form>
+    </div>
+  </section>
+
+<section class="popup popup_picture">
+  <div class="popup__picture-container">
+    <button type="button" class="popup__close-button popup_picture-close-button"></button>
+    <figure class="popup__picture-figure">
+      <img class="popup__picture-image" src="#" alt="#">
+      <figcaption class="popup__picture-figcaption"></figcaption>
+    </figure>
+  </div>
+</section>
+</main>
+
   <footer class="footer">
     <p class="footer__text">&#169; 2022 Mesto Russia</p>
   </footer>
