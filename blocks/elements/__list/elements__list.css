@@ -10,13 +10,13 @@
   transition: all 0.5s linear;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 990px) {
   .elements__list {
     grid-template-columns: repeat(2, minmax(min-content, max-content));
   }
 }
 
-@media (max-width: 630px) {
+@media (max-width: 690px) {
   .elements__list {
     grid-template-columns: repeat(1, minmax(min-content, max-content));
   }

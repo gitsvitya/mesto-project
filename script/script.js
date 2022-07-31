@@ -7,7 +7,7 @@ const nameInput = formEditElement.querySelector('input[name="popup_edit-input-na
 const descriprionInput = formEditElement.querySelector('input[name="popup_edit-input-description"]');
 const popupEditCloseButton = document.querySelector('.popup_edit-close-button');
 const elementsInitialList = document.querySelector('.elements__list');
-const elementTemplate = document.querySelector('#element__template').content;
+const elementTemplate = document.querySelector('#element__template');
 const profileAddButton = document.querySelector('.profile__add-button');
 const popupAddConteiner = document.querySelector('.popup_add-picture');
 const formAddElement = popupAddConteiner.querySelector('.popup_add_form');
@@ -72,8 +72,7 @@ function toggleLikeButton(event) {
 // Функция добавления новой карточки
 function addFormSubmitHandler(event) {
   event.preventDefault();
-  const newElement = elementTemplate.querySelector('.elements__element').cloneNode(true);
-  cardInit(elementsNewList, titleInput.value, linkInput.value, 'prepend');
+  initCard(elementsNewList, titleInput.value, linkInput.value, 'prepend');
   document.querySelector('.popup_add_form').reset();
   closePopup(popupAddConteiner);
 };
@@ -93,8 +92,8 @@ function pushDeleteButton(event) {
 }
 
 //Функция создания карточки
-function cardInit (listAppend, pictureName, pictureLink, addSide) {
-  const elementFromTemplate = elementTemplate.querySelector('.elements__element').cloneNode(true);
+function initCard (listAppend, pictureName, pictureLink, addSide) {
+  const elementFromTemplate = elementTemplate.content.querySelector('.elements__element').cloneNode(true);
   const elementFromTemplatePicture = elementFromTemplate.querySelector('.elements__picture');
   elementFromTemplatePicture.src = pictureLink;
   elementFromTemplatePicture.alt = pictureName;
@@ -143,7 +142,7 @@ popupPictureCloseButton.addEventListener('click', function () {
 
 // Заполняем изначальные 6 карточек
 for (let i = 0; i < initialCards.length; i++) {
-  cardInit(elementsInitialList, initialCards[i].name, initialCards[i].link, 'append');
+  initCard(elementsInitialList, initialCards[i].name, initialCards[i].link, 'append');
 }
 
 // Вносим изменения в данные профиля из введенного Input
