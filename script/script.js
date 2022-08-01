@@ -72,7 +72,7 @@ function toggleLikeButton(event) {
 // Функция добавления новой карточки
 function addFormSubmitHandler(event) {
   event.preventDefault();
-  initCard(elementsNewList, titleInput.value, linkInput.value, 'prepend');
+  elementsNewList.prepend(initCard(titleInput.value, linkInput.value));
   document.querySelector('.popup_add_form').reset();
   closePopup(popupAddConteiner);
 };
@@ -91,8 +91,7 @@ function pushDeleteButton(event) {
   deletedElement.remove();
 }
 
-//Функция создания карточки
-function initCard (listAppend, pictureName, pictureLink, addSide) {
+function initCard (pictureName, pictureLink) {
   const elementFromTemplate = elementTemplate.content.querySelector('.elements__element').cloneNode(true);
   const elementFromTemplatePicture = elementFromTemplate.querySelector('.elements__picture');
   elementFromTemplatePicture.src = pictureLink;
@@ -101,12 +100,7 @@ function initCard (listAppend, pictureName, pictureLink, addSide) {
   elementFromTemplate.querySelector('.elements__like').addEventListener('click', toggleLikeButton);
   elementFromTemplate.querySelector('.elements__delete').addEventListener('click', pushDeleteButton);
   elementFromTemplate.querySelector('.elements__picture').addEventListener('click', () => openPicturePopup(pictureLink, pictureName));
-  if (addSide === 'append') {
-    listAppend.append(elementFromTemplate);
-  }
-  else {
-    listAppend.prepend(elementFromTemplate);
-  }
+  return elementFromTemplate;
 }
 
 // Добавляем событие "openPopup" на попап с редактированием профиля
@@ -142,7 +136,7 @@ popupPictureCloseButton.addEventListener('click', function () {
 
 // Заполняем изначальные 6 карточек
 for (let i = 0; i < initialCards.length; i++) {
-  initCard(elementsInitialList, initialCards[i].name, initialCards[i].link, 'append');
+  elementsInitialList.append(initCard(initialCards[i].name, initialCards[i].link));
 }
 
 // Вносим изменения в данные профиля из введенного Input
