@@ -8,13 +8,12 @@
   <meta name="keywords" content="mesto russia яндекс практикум учеба" />
   <meta name="author" content="Виктор Строков" />
   <title>Mesto Russia</title>
-  <link rel="stylesheet" href="./pages/index.css" />
 </head>
 
 <body class="page">
 
   <header class="header">
-    <img src="./images/logo.svg" alt="Логотип Mesto Russia" class="header__logo">
+    <div class="header__logo"></div>
   </header>
   <main class="main">
     <section class="profile">
@@ -43,12 +42,14 @@
   <div class="popup popup_profile-edit">
     <div class="popup__container">
       <button type="button" class="popup__close-button popup_edit-close-button"></button>
-      <form action="popup_form" class="popup__form popup_edit_form" name="popup_form">
+      <form action="popup_form" class="popup__form popup_edit_form form" name="popup_form">
         <h2 class="popup__heading">Редактировать профиль</h2>
-        <fieldset class="popup__input-container">
-          <input type="text" name="popup_edit-input-name" class='popup__input' required>
-          <input type="text" name="popup_edit-input-description" class='popup__input' required>
-          <button type="submit" class="popup__button-submit popup_edit-buttion-submit">Сохранить</button>
+        <fieldset class="popup__input-container form__set">
+          <input type="text" name="popup_edit-input-name" id="name-input" class='popup__input' required minlength="2" maxlength="40" pattern="^[a-zA-Z а-яёА-ЯЁ -]+$" data-error-message="Оба поля должны содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы.">
+          <span class="name-input-error"></span>
+          <input type="text" name="popup_edit-input-description" id="description-input" class='popup__input' required minlength="2" maxlength="200" pattern="^[a-zA-Z а-яёА-ЯЁ -]+$" data-error-message="Оба поля должны содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы.">
+          <span class="description-input-error"></span>
+          <button type="submit" class="popup__button-submit">Сохранить</button>
         </fieldset>
       </form>
     </div>
@@ -57,13 +58,15 @@
   <div class="popup popup_add-picture">
     <div class="popup__container">
       <button type="button" class="popup__close-button popup_add-close-button"></button>
-      <form action="popup_form" class="popup__form popup_add_form" name="popup_form">
+      <form action="popup_form" class="popup__form popup_add_form form" name="popup__form">
         <h2 class="popup__heading">Новое место</h2>
-        <fieldset class="popup__input-container">
-          <input type="text" name="popup_input-title" class='popup__input' placeholder="Название"
-            required>
-          <input type="text" name="popup_input-link" class='popup__input'
+        <fieldset class="popup__input-container form__set">
+          <input type="text" name="popup_input-title" id="title-input" class='popup__input' placeholder="Название"
+            required minlength="2" maxlength="30" pattern="^[a-zA-Z а-яёА-ЯЁ -]+$" data-error-message="Оба поля должны содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы.">
+          <span class="title-input-error"></span>
+          <input type="url" name="popup_input-link" id="link-input" class='popup__input popup_input-link'
             placeholder="Ссылка на картинку" required>
+          <span class="link-input-error"></span>
           <button type="submit" class="popup__button-submit">Создать</button>
         </fieldset>
       </form>
@@ -88,8 +91,6 @@
       <button type="submit" class="elements__like"></button>
     </li>
   </template>
-
-  <script src="./script/script.js"></script>
 
 </body>
 

@@ -1,3 +1,5 @@
+import './pages/index.css';
+
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -62,7 +64,7 @@ function editFormSubmitHandler(event) {
   profileName.textContent = nameInput.value;
   profileDescription.textContent = descriprionInput.value;
   closePopup(popupEditConteiner);
-};
+}
 
 //Функция переключения кнопки лайков, addEventListener присваивается при создании карточки
 function toggleLikeButton(event) {
@@ -75,7 +77,7 @@ function addFormSubmitHandler(event) {
   elementsNewList.prepend(initCard(titleInput.value, linkInput.value));
   document.querySelector('.popup_add_form').reset();
   closePopup(popupAddConteiner);
-};
+}
 
 // Функция открытия попапа с картинкой, addEventListener присваивается при ее создании
 function openPicturePopup(pictureLink, pictureName) {
@@ -142,3 +144,93 @@ for (let i = 0; i < initialCards.length; i++) {
 // Вносим изменения в данные профиля из введенного Input
 nameInput.value = profileName.textContent;
 descriprionInput.value = profileDescription.textContent;
+
+
+
+
+
+
+// Валидация формы "Редактировать профиль"
+
+// Ищем элемент в форме и добавляем ему класс с ошибкой
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('form_input_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('form_input-error_active');
+};
+
+// Ищем элемент в форме и добавляем ему класс с ошибкой
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('form_input_type_error');
+  errorElement.classList.remove('form_input-error_active');
+  errorElement.textContent = '';
+};
+
+//Проверяем вводимый элемент на валидарность и показываем ошибку, если false
+const checkInputValidity = (formElement, inputElement) => {
+  if (inputElement.validity.patternMismatch) {
+    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+  } else {
+    inputElement.setCustomValidity("");
+  }
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+};
+
+// Ищем все поля input и кнопку submit
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  const buttonElement = formElement.querySelector('.popup__button-submit');
+
+// Делаем кнопку неактивной перед первым вводом
+  toggleButtonState(inputList, buttonElement);
+
+// Проверяем все вводимые элементы на ошибки и регулирует активность кнопки
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+// Ищем все формы и отменяем стандартные визуализации ошибки браузера
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.form'));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+    });
+// Ищем все form__set в формах и на каждой выполняем функцию setEventListeners
+    const fieldsetList = Array.from(formElement.querySelectorAll('.form__set'));
+    fieldsetList.forEach((fieldSet) => {
+      setEventListeners(fieldSet);
+    });
+  });
+};
+
+//Проверяем вводимый элемент на валидарность посредством input и возвращаем результат
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  })
+};
+
+// Присваиваем все элементы на валидарность, если хоть один невыполненн, то делаем кнопку неактивной
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add('popup_button-submit-disabled');
+    buttonElement.setAttribute('disabled', true);
+  }
+  else {
+    buttonElement.classList.remove('popup_button-submit-disabled');
+    buttonElement.removeAttribute('disabled');
+  }
+};
+
+enableValidation();

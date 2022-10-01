@@ -36,3 +36,6 @@
 @import url('../blocks/popup/__picture-figcaprion/popup__picture-figcaption.css');
 @import url('../blocks/footer/footer.css');
 @import url('../blocks/footer/__text/footer__text.css');
+@import url('../blocks/popup/__button-submit/_button-submit-disabled/popup_button-submit-disabled.css');
+@import url('../blocks/popup/__form/_input-error_active/form_input-error_active.css');
+@import url('../blocks/popup/__form/_input_type_error/form_input_type_error.css');

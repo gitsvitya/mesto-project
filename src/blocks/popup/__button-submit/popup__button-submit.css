@@ -3,6 +3,7 @@
   border-radius: 2px;
   min-height: 50px;
   max-width: 358px;
+  max-height: 135px;
   padding: 48px 0 37px 0;
   background-clip: content-box;
   box-sizing: content-box; 
@@ -14,7 +15,6 @@
   line-height: 22px;
   text-align: center;
   color: #FFFFFF;
-
 }
 
 .popup__button-submit:hover {
