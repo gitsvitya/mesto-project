@@ -81,4 +81,4 @@ const toggleButtonState = (inputList, buttonElement, {inactiveButtonClass}) => {
 };
 
 // Экспор главной фукнции
-export {enableValidation};
+export {enableValidation, toggleButtonState};

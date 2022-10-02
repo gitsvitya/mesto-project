@@ -1,10 +1,10 @@
 .popup__button-submit {
+  padding: 0;
   background-color: #000000;
   border-radius: 2px;
   min-height: 50px;
   max-width: 358px;
   max-height: 135px;
-  padding: 48px 0 37px 0;
   background-clip: content-box;
   box-sizing: content-box; 
   border: 0;
@@ -26,8 +26,6 @@
   .popup__button-submit {
     font-size: 14px;
     line-height: 17px;
-    padding-top: 45px;
-    padding-bottom: 25px;
     min-height: 46px;
     max-width: 238px;
   }
