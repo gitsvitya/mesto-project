@@ -7,11 +7,11 @@ const nameInput = formEditElement.querySelector('input[name="popup_edit-input-na
 const descriprionInput = formEditElement.querySelector('input[name="popup_edit-input-description"]');
 
 
-function editFormSubmitHandler(event) {
+function handleProfileFormSubmit(event) {
     event.preventDefault();
     profileName.textContent = nameInput.value;
     profileDescription.textContent = descriprionInput.value;
     closePopup(popupEditConteiner);
 }
 
-export {editFormSubmitHandler, profileName, profileDescription, nameInput, descriprionInput, formEditElement};
+export {handleProfileFormSubmit, profileName, profileDescription, nameInput, descriprionInput, formEditElement};

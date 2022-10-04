@@ -39,10 +39,10 @@ function toggleLikeButton(event) {
 }
 
 // Функция добавления новой карточки
-function addFormSubmitHandler(event) {
-    event.preventDefault();
+function handleSubmitForm(evt) {
+    evt.preventDefault();
     elementsNewList.prepend(initCard(titleInput.value, linkInput.value));
-    document.querySelector('.popup_add_form').reset();
+    formAddElement.reset();
     closePopup(popupAddConteiner);
 }
 
@@ -61,8 +61,8 @@ function initCard (pictureName, pictureLink) {
     elementFromTemplate.querySelector('.elements__name').textContent = pictureName;
     elementFromTemplate.querySelector('.elements__like').addEventListener('click', toggleLikeButton);
     elementFromTemplate.querySelector('.elements__delete').addEventListener('click', pushDeleteButton);
-    elementFromTemplate.querySelector('.elements__picture').addEventListener('click', () => openPicturePopup(pictureLink, pictureName));
+    elementFromTemplatePicture.addEventListener('click', () => openPicturePopup(pictureLink, pictureName));
     return elementFromTemplate;
 }
 
-export {initialCards, toggleLikeButton, addFormSubmitHandler, pushDeleteButton, initCard, formAddElement, popupAddConteiner};
+export {initialCards, toggleLikeButton, handleSubmitForm, pushDeleteButton, initCard, formAddElement, popupAddConteiner, titleInput, linkInput};
