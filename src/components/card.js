@@ -39,10 +39,12 @@ function toggleLikeButton(event) {
 }
 
 // Функция добавления новой карточки
-function handleSubmitForm(evt) {
+function handleSubmitCardForm(evt) {
     evt.preventDefault();
     elementsNewList.prepend(initCard(titleInput.value, linkInput.value));
     formAddElement.reset();
+    evt.submitter.classList.add('popup_button-submit-disabled');
+    evt.submitter.setAttribute('disabled', true);
     closePopup(popupAddConteiner);
 }
 
@@ -65,4 +67,4 @@ function initCard (pictureName, pictureLink) {
     return elementFromTemplate;
 }
 
-export {initialCards, toggleLikeButton, handleSubmitForm, pushDeleteButton, initCard, formAddElement, popupAddConteiner, titleInput, linkInput};
+export {initialCards, toggleLikeButton, handleSubmitCardForm, pushDeleteButton, initCard, formAddElement, popupAddConteiner, titleInput, linkInput};

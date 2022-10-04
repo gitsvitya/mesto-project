@@ -3,7 +3,7 @@ import './pages/index.css';
 
 //Импорты
 import {enableValidation} from "./components/validate.js";
-import {initialCards, handleSubmitForm, initCard, formAddElement, popupAddConteiner} from './components/card.js';
+import {initialCards, handleSubmitCardForm, initCard, formAddElement, popupAddConteiner} from './components/card.js';
 import {openPopup, closePopup, popupPictureContainer, popupEditConteiner} from './components/modal.js';
 import {handleProfileFormSubmit, profileName, profileDescription, nameInput, descriprionInput, formEditElement} from './components/profile.js';
 import {profileEditButton, elementsInitialList, profileAddButton, popupPictureCloseButton, popupAddCloseButton, closeButtons} from './components/constants.js'
@@ -25,21 +25,11 @@ profileAddButton.addEventListener('click', function () {
   openPopup(popupAddConteiner);
 });
 
-// Добавляем событие "closePopup" на попап с созданием новой карточки
-popupAddCloseButton.addEventListener('click', function () {
-  closePopup(popupAddConteiner);
-});
-
 // Добавляем событие "submit" на попап с редактированием профиля
 formEditElement.addEventListener('submit', handleProfileFormSubmit);
 
 //Добавляем событие "submit" на попап с добавленим новой карточки
-formAddElement.addEventListener('submit', handleSubmitForm);
-
-// Добавляем событие "closePopup" на попап с картинкой
-popupPictureCloseButton.addEventListener('click', function () {
-  closePopup(popupPictureContainer);
-});
+formAddElement.addEventListener('submit', handleSubmitCardForm);
 
 // Заполняем изначальные 6 карточек
 for (let i = 0; i < initialCards.length; i++) {
