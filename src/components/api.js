@@ -62,4 +62,20 @@ const sendCard = (cardName, cardLink) => {
     })
 }
 
-export {getUserData, fillCards, sendProfileData, sendCard};
+const deleteCard = (cardId) => {
+  fetch(`${config.baseUrl}/cards/${cardId}`, {
+    method: 'DELETE',
+    headers: config.headers
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch (err => {
+      console.error(err);
+    });
+}
+
+export {getUserData, fillCards, sendProfileData, sendCard, deleteCard};

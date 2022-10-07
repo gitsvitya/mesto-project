@@ -3,8 +3,8 @@ import './pages/index.css';
 
 //Импорты
 import {enableValidation} from "/src/components/validate.js";
-import {initialCards, handleInitialCards, handleSubmitCardForm, initCard, formAddElement, popupAddConteiner} from '/src/components/card.js';
-import {openPopup, closePopup, popupPictureContainer, popupEditConteiner, popupAvatarConteiner} from '/src/components/modal.js';
+import {handleInitialCards, handleSubmitCardForm, formAddElement, popupAddConteiner} from '/src/components/card.js';
+import {openPopup, closePopup, popupEditConteiner, popupAvatarConteiner} from '/src/components/modal.js';
 import {
   handleProfileFormSubmit,
   profileName,
@@ -18,10 +18,7 @@ import {
 
 import {
   profileEditButton,
-  elementsInitialList,
   profileAddButton,
-  popupPictureCloseButton,
-  popupAddCloseButton,
   closeButtons,
   avatarEditButton
 } from './components/constants.js';
