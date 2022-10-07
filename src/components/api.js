@@ -51,4 +51,15 @@ const sendProfileData = (profileName, profileDescription) => {
     })
 }
 
-export {getUserData, fillCards, sendProfileData};
+const sendCard = (cardName, cardLink) => {
+    fetch(`${config.baseUrl}/cards`, {
+        method: 'POST',
+        headers: config.headers,
+        body: JSON.stringify({
+            name: cardName,
+            link: cardLink
+        })
+    })
+}
+
+export {getUserData, fillCards, sendProfileData, sendCard};

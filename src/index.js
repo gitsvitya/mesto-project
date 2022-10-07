@@ -42,11 +42,6 @@ formEditElement.addEventListener('submit', handleProfileFormSubmit);
 //Добавляем событие "submit" на попап с добавленим новой карточки
 formAddElement.addEventListener('submit', handleSubmitCardForm);
 
-// Заполняем изначальные 6 карточек
-for (let i = 0; i < initialCards.length; i++) {
-  elementsInitialList.append(initCard(initialCards[i].name, initialCards[i].link));
-}
-
 // Функция проверки валидации
 enableValidation({
   formSelector: '.popup__form',
