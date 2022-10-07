@@ -10,7 +10,6 @@
   background-repeat: no-repeat;
   background-size: 10px;
   transition: all 0.5s linear;
-  /* display: block; */
 }
 
 .profile__edit-button:hover {

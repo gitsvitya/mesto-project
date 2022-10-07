@@ -6,4 +6,12 @@
   min-width: 120px;
   min-height: 120px;
   border-radius: 120px;
+  margin: 0;
+  padding: 0;
+  transition: all 0.5s linear;
+}
+
+.profile__avatar-button:hover .profile__avatar {
+  opacity: 0.2;
+  background-color: #000;
 }

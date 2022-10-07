@@ -3,6 +3,7 @@ const popupPictureDescription = document.querySelector('.popup__picture-figcapti
 const popupPictureContainer = document.querySelector('.popup_picture');
 const popupEditConteiner = document.querySelector('.popup_profile-edit');
 const formEditElement = popupEditConteiner.querySelector('.popup_edit_form');
+const popupAvatarConteiner = document.querySelector('.popup_avatar-edit');
 
 
 //Функция открытия попапа
@@ -43,4 +44,4 @@ function closePopup(container) {
     container.removeEventListener('mousedown', handleOverlay);
 }
 
-export {openPicturePopup, openPopup, closePopup, popupPictureContainer, popupEditConteiner, formEditElement};
+export {openPicturePopup, openPopup, closePopup, popupPictureContainer, popupEditConteiner, formEditElement, popupAvatarConteiner};

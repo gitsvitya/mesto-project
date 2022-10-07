@@ -1,0 +1,8 @@
+.elements__like-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 22px;
+  padding-right: 20px;
+  padding-bottom: 22px;
+  justify-content: center;
+}

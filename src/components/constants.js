@@ -5,5 +5,7 @@ const profileAddButton = document.querySelector('.profile__add-button');
 const popupPictureCloseButton = document.querySelector('.popup_picture-close-button');
 const popupAddCloseButton = document.querySelector('.popup_add-close-button');
 const closeButtons = document.querySelectorAll('.popup__close-button');
+const avatarEditButton = document.querySelector('.profile__avatar-button');
 
-export {profileEditButton, popupEditCloseButton, elementsInitialList, profileAddButton, popupPictureCloseButton, popupAddCloseButton, closeButtons};
+
+export {profileEditButton, popupEditCloseButton, elementsInitialList, profileAddButton, popupPictureCloseButton, popupAddCloseButton, closeButtons, avatarEditButton};

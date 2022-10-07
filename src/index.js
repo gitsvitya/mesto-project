@@ -4,7 +4,7 @@ import './pages/index.css';
 //Импорты
 import {enableValidation} from "/src/components/validate.js";
 import {initialCards, handleInitialCards, handleSubmitCardForm, initCard, formAddElement, popupAddConteiner} from '/src/components/card.js';
-import {openPopup, closePopup, popupPictureContainer, popupEditConteiner} from '/src/components/modal.js';
+import {openPopup, closePopup, popupPictureContainer, popupEditConteiner, popupAvatarConteiner} from '/src/components/modal.js';
 import {
   handleProfileFormSubmit,
   profileName,
@@ -16,7 +16,15 @@ import {
   fillProfileWithData
 } from '/src/components/profile.js';
 
-import {profileEditButton, elementsInitialList, profileAddButton, popupPictureCloseButton, popupAddCloseButton, closeButtons} from './components/constants.js';
+import {
+  profileEditButton,
+  elementsInitialList,
+  profileAddButton,
+  popupPictureCloseButton,
+  popupAddCloseButton,
+  closeButtons,
+  avatarEditButton
+} from './components/constants.js';
 import {getUserData, fillCards} from './components/api.js';
 
 // Добавляем событие "openPopup" на попап с редактированием профиля
@@ -24,6 +32,10 @@ profileEditButton.addEventListener('click', function () {
   openPopup(popupEditConteiner);
   nameInput.value = profileName.textContent;
   descriprionInput.value = profileDescription.textContent;
+});
+
+avatarEditButton.addEventListener('click', function () {
+  openPopup(popupAvatarConteiner);
 });
 
 closeButtons.forEach((button) => {
