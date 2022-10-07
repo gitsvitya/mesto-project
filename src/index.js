@@ -2,12 +2,22 @@
 import './pages/index.css';
 
 //Импорты
-import {enableValidation} from "./components/validate.js";
-import {initialCards, handleSubmitCardForm, initCard, formAddElement, popupAddConteiner} from './components/card.js';
-import {openPopup, closePopup, popupPictureContainer, popupEditConteiner} from './components/modal.js';
-import {handleProfileFormSubmit, profileName, profileDescription, profileAvatar, nameInput, descriprionInput, formEditElement} from './components/profile.js';
+import {enableValidation} from "/src/components/validate.js";
+import {initialCards, handleInitialCards, handleSubmitCardForm, initCard, formAddElement, popupAddConteiner} from '/src/components/card.js';
+import {openPopup, closePopup, popupPictureContainer, popupEditConteiner} from '/src/components/modal.js';
+import {
+  handleProfileFormSubmit,
+  profileName,
+  profileDescription,
+  profileAvatar,
+  nameInput,
+  descriprionInput,
+  formEditElement,
+  fillProfileWithData
+} from '/src/components/profile.js';
+
 import {profileEditButton, elementsInitialList, profileAddButton, popupPictureCloseButton, popupAddCloseButton, closeButtons} from './components/constants.js';
-import {fillUserData} from './components/api.js';
+import {getUserData, fillCards} from './components/api.js';
 
 // Добавляем событие "openPopup" на попап с редактированием профиля
 profileEditButton.addEventListener('click', function () {
@@ -48,4 +58,7 @@ enableValidation({
 });
 
 // Функция формирования профилиля с сервера
-fillUserData(profileName, profileDescription, profileAvatar);
+fillProfileWithData(profileName, profileDescription, profileAvatar);
+
+// Функция заполнения первоначальных карточек с сервера
+handleInitialCards();

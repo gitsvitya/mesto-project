@@ -1,4 +1,5 @@
-import {openPicturePopup, closePopup} from "./modal.js";
+import {openPicturePopup, closePopup} from "/src/components/modal.js";
+import {fillCards} from "./api";
 
 const elementTemplate = document.querySelector('#element__template');
 const elementsNewList = document.querySelector('.elements__list');
@@ -7,6 +8,32 @@ const formAddElement = popupAddConteiner.querySelector('.popup_add_form');
 const titleInput = formAddElement.querySelector('input[name="popup_input-title"]');
 const linkInput = formAddElement.querySelector('input[name="popup_input-link"]');
 const initialCards = [
+    // {
+    //     name: 'Архыз',
+    //     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    // },
+    // {
+    //     name: 'Челябинская область',
+    //     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    // },
+    // {
+    //     name: 'Иваново',
+    //     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    // },
+    // {
+    //     name: 'Камчатка',
+    //     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    // },
+    // {
+    //     name: 'Холмогорский район',
+    //     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    // },
+    // {
+    //     name: 'Байкал',
+    //     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    // }
+];
+const initialCards2 = [
     {
         name: 'Архыз',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -47,6 +74,15 @@ function handleSubmitCardForm(evt) {
     evt.submitter.setAttribute('disabled', true);
     closePopup(popupAddConteiner);
 }
+// Функция заполнения первоначальных карточек с сервера
+function handleInitialCards(evt) {
+    fillCards()
+        .then((res) => {
+            for (let i = 0; i < res.length; i++) {
+                elementsNewList.append(initCard(res[i].name, res[i].link));
+            }
+            });
+        }
 
 //Функция удаления карточки, addEventListener присваивается при ее создании
 function pushDeleteButton(event) {
@@ -67,4 +103,4 @@ function initCard (pictureName, pictureLink) {
     return elementFromTemplate;
 }
 
-export {initialCards, toggleLikeButton, handleSubmitCardForm, pushDeleteButton, initCard, formAddElement, popupAddConteiner, titleInput, linkInput};
+export {initialCards, handleInitialCards, toggleLikeButton, handleSubmitCardForm, pushDeleteButton, initCard, formAddElement, popupAddConteiner, titleInput, linkInput, elementsNewList};

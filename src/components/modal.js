@@ -1,5 +1,3 @@
-import {titleInput, linkInput} from "./card.js";
-
 const popupPictureImage = document.querySelector('.popup__picture-image');
 const popupPictureDescription = document.querySelector('.popup__picture-figcaption');
 const popupPictureContainer = document.querySelector('.popup_picture');
