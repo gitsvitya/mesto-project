@@ -1,5 +1,5 @@
 import {openPicturePopup, closePopup, openPopup} from "/src/components/modal.js";
-import {fillCards, sendCard, deleteCard} from "./api";
+import {fillCards, sendCard, deleteCard, likeswitcher} from "./api";
 import {profileAddButton} from "./constants";
 
 const elementTemplate = document.querySelector('#element__template');
@@ -10,18 +10,6 @@ const titleInput = formAddElement.querySelector('input[name="popup_input-title"]
 const linkInput = formAddElement.querySelector('input[name="popup_input-link"]');
 
 const myUserId = 'dedae49c75f881debabf24b5';
-
-
-//Функция переключения кнопки лайков, addEventListener присваивается при создании карточки
-function toggleLikeButton(event) {
-    event.target.classList.toggle('elements_like_active');
-    if (event.target.classList.contains('elements_like_active')) {
-      console.log(true);
-    }
-    else{
-      console.log(false);
-    }
-}
 
 // Функция добавления новой карточки
 function handleSubmitCardForm(evt) {
@@ -38,7 +26,7 @@ function handleInitialCards(evt) {
     fillCards()
         .then((res) => {
             for (let i = 0; i < res.length; i++) {
-                elementsNewList.append(initCard(res[i].name, res[i].link, res[i].likes.length, res[i].owner._id, res[i]._id));
+                elementsNewList.append(initCard(res[i].name, res[i].link, res[i].likes.length, res[i].owner._id, res[i]._id, res[i].likes));
             }
             });
 }
@@ -50,11 +38,12 @@ function pushDeleteButton(event) {
 }
 
 //Функция создания карточки
-function initCard (pictureName, pictureLink, numberofLikes, userId, cardId) {
+function initCard (pictureName, pictureLink, numberofLikes, userId, cardId, detailedLikes) {
     const elementFromTemplate = elementTemplate.content.querySelector('.elements__element').cloneNode(true);
     const elementFromTemplatePicture = elementFromTemplate.querySelector('.elements__picture');
     const elementFromTemplateLikes = elementFromTemplate.querySelector('.elements__like-number');
     const cardDeleteButton = elementFromTemplate.querySelector('.elements__delete');
+    const cardLikeButton = elementFromTemplate.querySelector('.elements__like');
     if (userId !== myUserId) {
       cardDeleteButton.classList.add("elements_delete_disable");
     }
@@ -65,10 +54,29 @@ function initCard (pictureName, pictureLink, numberofLikes, userId, cardId) {
     elementFromTemplatePicture.alt = pictureName;
     elementFromTemplateLikes.textContent = numberofLikes;
     elementFromTemplate.querySelector('.elements__name').textContent = pictureName;
-    elementFromTemplate.querySelector('.elements__like').addEventListener('click', toggleLikeButton);
-    elementFromTemplate.querySelector('.elements__delete').addEventListener('click', pushDeleteButton);
+
+    // Проверяем лайкали ли мы фотку до этого по userid от сервера, сравнивая с нашим
+    for (let i = 0; i<detailedLikes.length; i++) {
+      if (detailedLikes[i]._id === myUserId) {
+        cardLikeButton.classList.add('elements_like_active');
+      }
+    }
+    cardLikeButton.addEventListener('click', function (event) {
+      event.target.classList.toggle('elements_like_active');
+      if (event.target.classList.contains('elements_like_active')) {
+        likeswitcher('PUT', cardId);
+        numberofLikes += 1;
+        elementFromTemplateLikes.textContent = numberofLikes;
+      }
+      else{
+        likeswitcher('DELETE', cardId);
+        numberofLikes -= 1;
+        elementFromTemplateLikes.textContent = numberofLikes;
+      }
+    });
+    cardDeleteButton.addEventListener('click', pushDeleteButton);
     elementFromTemplatePicture.addEventListener('click', () => openPicturePopup(pictureLink, pictureName));
     return elementFromTemplate;
 }
 
-export {handleInitialCards, toggleLikeButton, handleSubmitCardForm, pushDeleteButton, initCard, formAddElement, popupAddConteiner, titleInput, linkInput, elementsNewList};
+export {handleInitialCards, handleSubmitCardForm, pushDeleteButton, initCard, formAddElement, popupAddConteiner, titleInput, linkInput, elementsNewList};

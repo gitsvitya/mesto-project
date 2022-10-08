@@ -78,4 +78,20 @@ const deleteCard = (cardId) => {
     });
 }
 
-export {getUserData, fillCards, sendProfileData, sendCard, deleteCard};
+const likeswitcher = (methodType, cardId) => {
+  fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: methodType,
+    headers: config.headers
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch (err => {
+      console.error(err);
+    });
+}
+
+export {getUserData, fillCards, sendProfileData, sendCard, deleteCard, likeswitcher};
