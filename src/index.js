@@ -4,16 +4,23 @@ import './pages/index.css';
 //Импорты
 import {enableValidation} from "/src/components/validate.js";
 import {handleInitialCards, handleSubmitCardForm, formAddElement, popupAddConteiner} from '/src/components/card.js';
-import {openPopup, closePopup, popupEditConteiner, popupAvatarConteiner} from '/src/components/modal.js';
+import {
+  openPopup,
+  closePopup,
+  popupEditConteiner,
+  popupAvatarConteiner,
+  formEditAvatar
+} from '/src/components/modal.js';
 import {
   handleProfileFormSubmit,
   profileName,
   profileDescription,
   profileAvatar,
   nameInput,
-  descriprionInput,
+  descriptionInput,
   formEditElement,
-  fillProfileWithData
+  fillProfileWithData,
+  handleProfileAvatarSubmit
 } from '/src/components/profile.js';
 
 import {
@@ -22,13 +29,12 @@ import {
   closeButtons,
   avatarEditButton
 } from './components/constants.js';
-import {getUserData, fillCards} from './components/api.js';
 
 // Добавляем событие "openPopup" на попап с редактированием профиля
 profileEditButton.addEventListener('click', function () {
   openPopup(popupEditConteiner);
   nameInput.value = profileName.textContent;
-  descriprionInput.value = profileDescription.textContent;
+  descriptionInput.value = profileDescription.textContent;
 });
 
 avatarEditButton.addEventListener('click', function () {
@@ -50,6 +56,9 @@ formEditElement.addEventListener('submit', handleProfileFormSubmit);
 
 //Добавляем событие "submit" на попап с добавленим новой карточки
 formAddElement.addEventListener('submit', handleSubmitCardForm);
+
+// Добавляем событие "submit" на попап с добавлением аватара
+formEditAvatar.addEventListener('submit', handleProfileAvatarSubmit);
 
 // Функция проверки валидации
 enableValidation({

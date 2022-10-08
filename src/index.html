@@ -2,81 +2,91 @@
 <html lang="ru">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Mesto Russia" />
-  <meta name="keywords" content="mesto russia яндекс практикум учеба" />
-  <meta name="author" content="Виктор Строков" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Mesto Russia"/>
+  <meta name="keywords" content="mesto russia яндекс практикум учеба"/>
+  <meta name="author" content="Виктор Строков"/>
   <title>Mesto Russia</title>
 </head>
 
 <body class="page">
 
-  <header class="header">
-    <div class="header__logo"></div>
-  </header>
-  <main class="main">
-    <section class="profile">
-      <div class="profile__area">
-        <button type="button" class="profile__avatar-button">
-          <div class="profile__avatar"></div>
-          <img src="<%=require('./images/avatar_edit.svg')%>" alt="Редактировать профиль" class="profile__avatar-edit-img">
-        </button>
-        <div class="profile__info">
-          <h1 class="profile__name"></h1>
-          <button type="button" class="profile__edit-button"></button>
-          <p class="profile__description"></p>
-        </div>
+<header class="header">
+  <div class="header__logo"></div>
+</header>
+<main class="main">
+  <section class="profile">
+    <div class="profile__area">
+      <button type="button" class="profile__avatar-button">
+        <div class="profile__avatar"></div>
+        <img src="<%=require('./images/avatar_edit.svg')%>" alt="Редактировать профиль"
+             class="profile__avatar-edit-img">
+      </button>
+      <div class="profile__info">
+        <h1 class="profile__name"></h1>
+        <button type="button" class="profile__edit-button"></button>
+        <p class="profile__description"></p>
       </div>
-      <button type="button" class="profile__add-button"></button>
-    </section>
+    </div>
+    <button type="button" class="profile__add-button"></button>
+  </section>
 
-    <section class="elements">
-        <ul class="elements__list">
-        </ul>
-    </section>
+  <section class="elements">
+    <ul class="elements__list">
+    </ul>
+  </section>
 
 </main>
 
-  <footer class="footer">
-    <p class="footer__text">&#169; 2022 Mesto Russia</p>
-  </footer>
+<footer class="footer">
+  <p class="footer__text">&#169; 2022 Mesto Russia</p>
+</footer>
 
-  <div class="popup popup_profile-edit">
-    <div class="popup__container">
-      <button type="button" class="popup__close-button popup_edit-close-button"></button>
-      <form action="popup_form" class="popup__form popup_edit_form" name="popup_form">
-        <h2 class="popup__heading">Редактировать профиль</h2>
-        <fieldset class="popup__input-container form__set">
-          <input type="text" name="popup_edit-input-name" id="name-input" class='popup__input' required minlength="2" maxlength="40" pattern="^[a-zA-Z а-яёА-ЯЁ -]+$" data-error-message="Оба поля должны содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы.">
-          <span class="name-input-error"></span>
-          <input type="text" name="popup_edit-input-description" id="description-input" class='popup__input' required minlength="2" maxlength="200" pattern="^[a-zA-Z а-яёА-ЯЁ -]+$" data-error-message="Оба поля должны содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы.">
-          <span class="description-input-error"></span>
-          <button type="submit" class="popup__button-submit popup_button-submit-place">Сохранить</button>
-        </fieldset>
-      </form>
-    </div>
+<div class="popup popup_profile-edit">
+  <div class="popup__container">
+    <button type="button" class="popup__close-button popup_edit-close-button"></button>
+    <form action="popup_form" class="popup__form popup_edit_form" name="popup_form">
+      <h2 class="popup__heading">Редактировать профиль</h2>
+      <fieldset class="popup__input-container">
+        <input type="text" name="popup_edit-input-name" id="name-input" class='popup__input' required minlength="2"
+               maxlength="40" pattern="^[a-zA-Z а-яёА-ЯЁ -]+$"
+               data-error-message="Оба поля должны содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы.">
+        <span class="name-input-error"></span>
+        <input type="text" name="popup_edit-input-description" id="description-input" class='popup__input' required
+               minlength="2" maxlength="200" pattern="^[a-zA-Z а-яёА-ЯЁ -]+$"
+               data-error-message="Оба поля должны содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы.">
+        <span class="description-input-error"></span>
+        <button type="submit" class="popup__button-submit popup_button-submit-place popup__button-submit-profile">
+          Сохранить
+        </button>
+      </fieldset>
+    </form>
   </div>
+</div>
 
-  <div class="popup popup_add-picture">
-    <div class="popup__container">
-      <button type="button" class="popup__close-button popup_add-close-button"></button>
-      <form action="popup_form" class="popup__form popup_add_form" name="popup__form">
-        <h2 class="popup__heading">Новое место</h2>
-        <fieldset class="popup__input-container form__set">
-          <input type="text" name="popup_input-title" id="title-input" class='popup__input' placeholder="Название"
-            required minlength="2" maxlength="30" pattern="^[a-zA-Z а-яёА-ЯЁ -]+$" data-error-message="Оба поля должны содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы.">
-          <span class="title-input-error"></span>
-          <input type="url" name="popup_input-link" id="link-input" class='popup__input popup_input-link'
-            placeholder="Ссылка на картинку" required>
-          <span class="link-input-error"></span>
-          <button type="submit" class="popup__button-submit popup_button-submit-place">Создать</button>
-        </fieldset>
-      </form>
-    </div>
+<div class="popup popup_add-picture">
+  <div class="popup__container">
+    <button type="button" class="popup__close-button popup_add-close-button"></button>
+    <form action="popup_form" class="popup__form popup_add_form" name="popup__form">
+      <h2 class="popup__heading">Новое место</h2>
+      <fieldset class="popup__input-container">
+        <input type="text" name="popup_input-title" id="title-input" class='popup__input' placeholder="Название"
+               required minlength="2" maxlength="30" pattern="^[a-zA-Z а-яёА-ЯЁ -]+$"
+               data-error-message="Оба поля должны содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы.">
+        <span class="title-input-error"></span>
+        <input type="url" name="popup_input-link" id="link-input" class='popup__input'
+               placeholder="Ссылка на картинку" required>
+        <span class="link-input-error"></span>
+        <button type="submit" class="popup__button-submit popup_button-submit-place popup__button-submit-picture">
+          Создать
+        </button>
+      </fieldset>
+    </form>
   </div>
+</div>
 
-  <div class="popup popup_picture">
+<div class="popup popup_picture">
   <div class="popup__picture-container">
     <button type="button" class="popup__close-button popup_picture-close-button"></button>
     <figure class="popup__picture-figure">
@@ -84,34 +94,36 @@
       <figcaption class="popup__picture-figcaption"></figcaption>
     </figure>
   </div>
-  </div>
+</div>
 
-  <div class="popup popup_avatar-edit">
-    <div class="popup__container">
-      <button type="button" class="popup__close-button popup_add-close-button"></button>
-      <form action="popup_form" class="popup__form popup_add_form" name="popup__form">
-        <h2 class="popup__heading">Обновить аватар</h2>
-        <fieldset class="popup__input-container form__set">
-          <input type="url" name="popup_input-link" id="link-input" class='popup__input popup_input-link'
-                 placeholder="Ссылка на картинку" required>
-          <span class="link-input-error"></span>
-          <button type="submit" class="popup__button-submit popup_button-submit-place">Сохранить</button>
-        </fieldset>
-      </form>
+<div class="popup popup_avatar-edit">
+  <div class="popup__container">
+    <button type="button" class="popup__close-button popup_add-close-button"></button>
+    <form action="popup_form" class="popup__form popup_avatar_form" name="popup__form">
+      <h2 class="popup__heading">Обновить аватар</h2>
+      <fieldset class="popup__input-container">
+        <input type="url" name="popup_input-avatar" id="avatar-input" class='popup__input'
+               placeholder="Ссылка на картинку" required>
+        <span class="avatar-input-error"></span>
+        <button type="submit" class="popup__button-submit popup_button-submit-place popup__button-submit-avatar">
+          Сохранить
+        </button>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+<template id="element__template">
+  <li class="elements__element">
+    <button type="button" class="elements__delete"></button>
+    <img src="#" alt="#1" class="elements__picture">
+    <h2 class="elements__name"></h2>
+    <div class="elements__like-container">
+      <button type="submit" class="elements__like"></button>
+      <span class="elements__like-number">0</span>
     </div>
-  </div>
-
-  <template id="element__template">
-    <li class="elements__element">
-      <button type="button" class="elements__delete"></button>
-      <img src="#" alt="#1" class="elements__picture">
-      <h2 class="elements__name"></h2>
-      <div class="elements__like-container">
-        <button type="submit" class="elements__like"></button>
-        <span class="elements__like-number">0</span>
-      </div>
-    </li>
-  </template>
+  </li>
+</template>
 
 </body>
 
