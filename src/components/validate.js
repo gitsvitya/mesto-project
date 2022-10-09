@@ -7,7 +7,7 @@ const showInputError = (formElement, inputElement, errorMessage, {inputErrorClas
   errorElement.classList.add(errorClass);
 };
 
-// Ищем элемент в форме и добавляем ему класс с ошибкой
+// Ищем элемент в форме и убираем класс с ошибкой
 const hideInputError = (formElement, inputElement, {inputErrorClass, errorClass}) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(inputErrorClass);
@@ -63,19 +63,12 @@ const enableValidation = ({
                           }) => {
   const formList = Array.from(document.querySelectorAll(formSelector));
   formList.forEach((formElement) => {
-    formElement.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-    });
-// Ищем все form__set в формах и на каждой выполняем функцию setEventListeners
-    const fieldsetList = Array.from(formElement.querySelectorAll('.form__set'));
-    fieldsetList.forEach((fieldSet) => {
-      setEventListeners(fieldSet, {
-        inputSelector,
-        submitButtonSelector,
-        inactiveButtonClass,
-        inputErrorClass,
-        errorClass
-      });
+    setEventListeners(formElement, {
+      inputSelector,
+      submitButtonSelector,
+      inactiveButtonClass,
+      inputErrorClass,
+      errorClass
     });
   });
 };
@@ -99,4 +92,4 @@ const toggleButtonState = (inputList, buttonElement, {inactiveButtonClass}) => {
 };
 
 // Экспор главной фукнции
-export {enableValidation, toggleButtonState};
+export {enableValidation};

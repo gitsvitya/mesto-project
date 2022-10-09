@@ -9,7 +9,6 @@ const formEditAvatar = popupAvatarConteiner.querySelector('.popup_avatar_form');
 
 //Функция открытия попапа
 function openPopup(container) {
-  const submitButton = container.querySelector('.popup__button-submit');
   container.classList.add('popup_opened');
   document.addEventListener('keydown', handleEscape);
   container.addEventListener('mousedown', handleOverlay);

@@ -3,7 +3,12 @@ import './pages/index.css';
 
 //Импорты
 import {enableValidation} from "/src/components/validate.js";
-import {handleInitialCards, handleSubmitCardForm, formAddElement, popupAddConteiner} from '/src/components/card.js';
+import {
+  handleInitialCards,
+  formAddElement,
+  popupAddConteiner,
+  titleInput, linkInput, elementsNewList, cardButton, initCard, myUserId
+} from '/src/components/card.js';
 import {
   openPopup,
   closePopup,
@@ -19,8 +24,10 @@ import {
   nameInput,
   descriptionInput,
   formEditElement,
-  fillProfileWithData,
-  handleProfileAvatarSubmit
+  avatarInput,
+  avatarImage,
+  avatarButton,
+  profileButton
 } from '/src/components/profile.js';
 
 import {
@@ -29,6 +36,7 @@ import {
   closeButtons,
   avatarEditButton
 } from './components/constants.js';
+import {fillCards, getUserData, sendAvatar, sendCard} from "./components/api";
 
 // Добавляем событие "openPopup" на попап с редактированием профиля
 profileEditButton.addEventListener('click', function () {
@@ -36,6 +44,43 @@ profileEditButton.addEventListener('click', function () {
   nameInput.value = profileName.textContent;
   descriptionInput.value = profileDescription.textContent;
 });
+
+// Обработчик сабмита формы
+function handleSubmitCardForm(evt) {
+  cardButton.textContent = 'Сохранение';
+  evt.preventDefault();
+  sendCard(titleInput.value, linkInput.value)
+    .then((res) => {
+      elementsNewList.prepend(initCard(res.name, res.link, res.likes.length, res.owner._id, res._id, res.likes));
+      closePopup(popupAddConteiner);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+    .finally(() => {
+      cardButton.textContent = 'Создать';
+    })
+  formAddElement.reset();
+  evt.submitter.classList.add('popup_button-submit-disabled');
+  evt.submitter.setAttribute('disabled', true);
+}
+
+// Функция обновления аватара и отправки на сервер
+function handleProfileAvatarSubmit(event) {
+  avatarButton.textContent = 'Сохранение';
+  event.preventDefault();
+  sendAvatar(avatarInput.value)
+    .then((res) => {
+      closePopup(popupAvatarConteiner);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+    .finally(() => {
+      profileButton.textContent = 'Сохранить';
+    })
+  avatarImage.style.backgroundImage = `url(${avatarInput.value})`;
+}
 
 avatarEditButton.addEventListener('click', function () {
   openPopup(popupAvatarConteiner);
@@ -70,8 +115,15 @@ enableValidation({
   errorClass: 'form_input-error_active'
 });
 
-// Функция формирования профилиля с сервера
-fillProfileWithData(profileName, profileDescription, profileAvatar);
+Promise.all([getUserData(), fillCards()])
+  .then((values)=>{
+    profileName.textContent = values[0].name;
+    profileDescription.textContent = values[0].about;
+    profileAvatar.style.backgroundImage = `url(${values[0].avatar})`;
+    myUserId.id = values[0]._id;
+    handleInitialCards(values[1])
+  })
+  .catch((err)=>{
+    console.log(err);
+  })
 
-// Функция заполнения первоначальных карточек с сервера
-handleInitialCards();

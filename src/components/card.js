@@ -1,5 +1,5 @@
-import {openPicturePopup, closePopup, openPopup} from "/src/components/modal.js";
-import {fillCards, sendCard, deleteCard, likeswitcher} from "./api";
+import {openPicturePopup} from "/src/components/modal.js";
+import {fillCards, deleteCard, toggleLike, getUserData} from "./api";
 
 const elementTemplate = document.querySelector('#element__template');
 const elementsNewList = document.querySelector('.elements__list');
@@ -10,38 +10,20 @@ const linkInput = formAddElement.querySelector('input[name="popup_input-link"]')
 const cardButton = document.querySelector('.popup__button-submit-picture');
 
 
-const myUserId = 'dedae49c75f881debabf24b5';
-
-// Функция добавления новой карточки
-function handleSubmitCardForm(evt) {
-  cardButton.textContent = 'Сохранение';
-  evt.preventDefault();
-  sendCard(titleInput.value, linkInput.value)
-    .then(data => {
-      cardButton.textContent = 'Сохранить';
-    })
-
-  elementsNewList.prepend(initCard(titleInput.value, linkInput.value));
-  formAddElement.reset();
-  evt.submitter.classList.add('popup_button-submit-disabled');
-  evt.submitter.setAttribute('disabled', true);
-  closePopup(popupAddConteiner);
-}
+// const myUserId = 'dedae49c75f881debabf24b5';
+const myUserId = {id: ''};
 
 // Функция заполнения первоначальных карточек с сервера
-function handleInitialCards(evt) {
+function handleInitialCards() {
   fillCards()
     .then((res) => {
-      for (let i = 0; i < res.length; i++) {
-        elementsNewList.append(initCard(res[i].name, res[i].link, res[i].likes.length, res[i].owner._id, res[i]._id, res[i].likes));
-      }
+      res.forEach((res) => {
+        elementsNewList.append(initCard(res.name, res.link, res.likes.length, res.owner._id, res._id, res.likes));
+      })
+    })
+    .catch(err => {
+      console.error(err);
     });
-}
-
-//Функция удаления карточки, addEventListener присваивается при ее создании
-function pushDeleteButton(event) {
-  const deletedElement = event.target.closest('.elements__element');
-  deletedElement.remove();
 }
 
 //Функция создания карточки
@@ -51,11 +33,18 @@ function initCard(pictureName, pictureLink, numberofLikes, userId, cardId, detai
   const elementFromTemplateLikes = elementFromTemplate.querySelector('.elements__like-number');
   const cardDeleteButton = elementFromTemplate.querySelector('.elements__delete');
   const cardLikeButton = elementFromTemplate.querySelector('.elements__like');
-  if (userId !== myUserId) {
+  if (userId !== myUserId.id) {
     cardDeleteButton.classList.add("elements_delete_disable");
   }
   cardDeleteButton.addEventListener('click', function () {
-    deleteCard(cardId);
+    const deletedElement = event.target.closest('.elements__element');
+    deleteCard(cardId)
+      .then((res) => {
+        deletedElement.remove();
+      })
+      .catch(err => {
+        console.error(err);
+      })
   });
   elementFromTemplatePicture.src = pictureLink;
   elementFromTemplatePicture.alt = pictureName;
@@ -65,36 +54,46 @@ function initCard(pictureName, pictureLink, numberofLikes, userId, cardId, detai
   // Проверяем лайкали ли мы фотку до этого по userid лайкнувших от сервера, сравнивая с нашим id
   if (detailedLikes !== undefined) {
     for (let i = 0; i < detailedLikes.length; i++) {
-      if (detailedLikes[i]._id === myUserId) {
+      if (detailedLikes[i]._id === myUserId.id) {
         cardLikeButton.classList.add('elements_like_active');
       }
     }
   }
   cardLikeButton.addEventListener('click', function (event) {
-    event.target.classList.toggle('elements_like_active');
     if (event.target.classList.contains('elements_like_active')) {
-      likeswitcher('PUT', cardId);
-      numberofLikes += 1;
-      elementFromTemplateLikes.textContent = numberofLikes;
+      toggleLike('DELETE', cardId)
+        .then((res) => {
+          event.target.classList.toggle('elements_like_active');
+          numberofLikes -= 1;
+          elementFromTemplateLikes.textContent = numberofLikes;
+        })
+        .catch(err => {
+          console.error(err);
+        })
     } else {
-      likeswitcher('DELETE', cardId);
-      numberofLikes -= 1;
-      elementFromTemplateLikes.textContent = numberofLikes;
+      toggleLike('PUT', cardId)
+        .then((res) => {
+          event.target.classList.toggle('elements_like_active');
+          numberofLikes += 1;
+          elementFromTemplateLikes.textContent = numberofLikes;
+        })
+        .catch(err => {
+          console.error(err);
+        })
     }
   });
-  cardDeleteButton.addEventListener('click', pushDeleteButton);
   elementFromTemplatePicture.addEventListener('click', () => openPicturePopup(pictureLink, pictureName));
   return elementFromTemplate;
 }
 
 export {
   handleInitialCards,
-  handleSubmitCardForm,
-  pushDeleteButton,
   initCard,
   formAddElement,
   popupAddConteiner,
   titleInput,
   linkInput,
-  elementsNewList
+  elementsNewList,
+  cardButton,
+  myUserId
 };

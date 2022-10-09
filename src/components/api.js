@@ -6,20 +6,19 @@ const config = {
   }
 }
 
+function getResponseData(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка: ${res.status}`);
+}
+
 const getUserData = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: 'GET',
     headers: config.headers
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    .then(res => getResponseData(res));
 }
 
 const fillCards = () => {
@@ -27,15 +26,7 @@ const fillCards = () => {
     method: 'GET',
     headers: config.headers
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    .then(res => getResponseData(res));
 }
 
 const sendProfileData = (profileName, profileDescription) => {
@@ -47,15 +38,7 @@ const sendProfileData = (profileName, profileDescription) => {
       about: profileDescription
     })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    .then(res => getResponseData(res));
 }
 
 const sendCard = (cardName, cardLink) => {
@@ -67,15 +50,7 @@ const sendCard = (cardName, cardLink) => {
       link: cardLink
     })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    .then(res => getResponseData(res));
 }
 
 const deleteCard = (cardId) => {
@@ -83,31 +58,15 @@ const deleteCard = (cardId) => {
     method: 'DELETE',
     headers: config.headers
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    .then(res => getResponseData(res));
 }
 
-const likeswitcher = (methodType, cardId) => {
+const toggleLike = (methodType, cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: methodType,
     headers: config.headers
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    .then(res => getResponseData(res));
 }
 
 const sendAvatar = (avatarLink) => {
@@ -118,15 +77,7 @@ const sendAvatar = (avatarLink) => {
       {avatar: avatarLink}
     )
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    .then(res => getResponseData(res));
 }
 
-export {getUserData, fillCards, sendProfileData, sendCard, deleteCard, likeswitcher, sendAvatar};
+export {getUserData, fillCards, sendProfileData, sendCard, deleteCard, toggleLike, sendAvatar};
