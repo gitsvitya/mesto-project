@@ -3,11 +3,9 @@ import {
   closePopup,
   popupEditConteiner,
   formEditElement,
-  formEditAvatar,
-  popupAvatarConteiner
+  formEditAvatar
 } from "/src/components/modal";
-import {getUserData, sendAvatar, sendProfileData} from "/src/components/api";
-import {cardButton} from "./card";
+import {sendProfileData} from "/src/components/api";
 
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
@@ -21,11 +19,12 @@ const profileButton = document.querySelector('.popup__button-submit-profile');
 
 // Функция заполнения и отправки данных профиля (кроме аватара)
 function handleProfileFormSubmit(event) {
-  profileButton.textContent = 'Сохранение';
+  profileButton.textContent = 'Сохранение...';
   event.preventDefault();
-  profileName.textContent = nameInput.value;
   sendProfileData(nameInput.value, descriptionInput.value)
     .then((res) => {
+      profileName.textContent = nameInput.value;
+      profileDescription.textContent = descriptionInput.value;
       closePopup(popupEditConteiner);
     })
     .catch(err => {
@@ -34,7 +33,6 @@ function handleProfileFormSubmit(event) {
     .finally(() => {
       profileButton.textContent = 'Сохранить';
     })
-  profileDescription.textContent = descriptionInput.value;
 }
 
 export {

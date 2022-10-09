@@ -3,39 +3,10 @@ import './pages/index.css';
 
 //Импорты
 import {enableValidation} from "/src/components/validate.js";
-import {
-  handleInitialCards,
-  formAddElement,
-  popupAddConteiner,
-  titleInput, linkInput, elementsNewList, cardButton, initCard, myUserId
-} from '/src/components/card.js';
-import {
-  openPopup,
-  closePopup,
-  popupEditConteiner,
-  popupAvatarConteiner,
-  formEditAvatar
-} from '/src/components/modal.js';
-import {
-  handleProfileFormSubmit,
-  profileName,
-  profileDescription,
-  profileAvatar,
-  nameInput,
-  descriptionInput,
-  formEditElement,
-  avatarInput,
-  avatarImage,
-  avatarButton,
-  profileButton
-} from '/src/components/profile.js';
-
-import {
-  profileEditButton,
-  profileAddButton,
-  closeButtons,
-  avatarEditButton
-} from './components/constants.js';
+import {formAddElement, popupAddConteiner, titleInput, linkInput, elementsNewList, cardButton, initCard, myUserId} from '/src/components/card.js';
+import {openPopup, closePopup, popupEditConteiner, popupAvatarConteiner, formEditAvatar} from '/src/components/modal.js';
+import {handleProfileFormSubmit, profileName, profileDescription, profileAvatar, nameInput, descriptionInput, formEditElement, avatarInput, avatarImage, avatarButton, profileButton} from '/src/components/profile.js';
+import {profileEditButton, profileAddButton, closeButtons, avatarEditButton} from './components/constants.js';
 import {fillCards, getUserData, sendAvatar, sendCard} from "./components/api";
 
 // Добавляем событие "openPopup" на попап с редактированием профиля
@@ -47,7 +18,7 @@ profileEditButton.addEventListener('click', function () {
 
 // Обработчик сабмита формы
 function handleSubmitCardForm(evt) {
-  cardButton.textContent = 'Сохранение';
+  cardButton.textContent = 'Сохранение...';
   evt.preventDefault();
   sendCard(titleInput.value, linkInput.value)
     .then((res) => {
@@ -67,10 +38,11 @@ function handleSubmitCardForm(evt) {
 
 // Функция обновления аватара и отправки на сервер
 function handleProfileAvatarSubmit(event) {
-  avatarButton.textContent = 'Сохранение';
+  avatarButton.textContent = 'Сохранение...';
   event.preventDefault();
   sendAvatar(avatarInput.value)
     .then((res) => {
+      avatarImage.style.backgroundImage = `url(${avatarInput.value})`;
       closePopup(popupAvatarConteiner);
     })
     .catch(err => {
@@ -79,7 +51,6 @@ function handleProfileAvatarSubmit(event) {
     .finally(() => {
       profileButton.textContent = 'Сохранить';
     })
-  avatarImage.style.backgroundImage = `url(${avatarInput.value})`;
 }
 
 avatarEditButton.addEventListener('click', function () {
@@ -116,14 +87,27 @@ enableValidation({
 });
 
 Promise.all([getUserData(), fillCards()])
-  .then((values)=>{
+  .then((values) => {
+    // Функция заполнения первоначальных карточек с сервера
+    function handleInitialCards() {
+      fillCards()
+        .then((res) => {
+          res.forEach((res) => {
+            elementsNewList.append(initCard(res.name, res.link, res.likes.length, res.owner._id, res._id, res.likes));
+          })
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+
     profileName.textContent = values[0].name;
     profileDescription.textContent = values[0].about;
     profileAvatar.style.backgroundImage = `url(${values[0].avatar})`;
     myUserId.id = values[0]._id;
     handleInitialCards(values[1])
   })
-  .catch((err)=>{
+  .catch((err) => {
     console.log(err);
   })
 

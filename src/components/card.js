@@ -10,21 +10,9 @@ const linkInput = formAddElement.querySelector('input[name="popup_input-link"]')
 const cardButton = document.querySelector('.popup__button-submit-picture');
 
 
-// const myUserId = 'dedae49c75f881debabf24b5';
 const myUserId = {id: ''};
 
-// Функция заполнения первоначальных карточек с сервера
-function handleInitialCards() {
-  fillCards()
-    .then((res) => {
-      res.forEach((res) => {
-        elementsNewList.append(initCard(res.name, res.link, res.likes.length, res.owner._id, res._id, res.likes));
-      })
-    })
-    .catch(err => {
-      console.error(err);
-    });
-}
+
 
 //Функция создания карточки
 function initCard(pictureName, pictureLink, numberofLikes, userId, cardId, detailedLikes) {
@@ -87,7 +75,6 @@ function initCard(pictureName, pictureLink, numberofLikes, userId, cardId, detai
 }
 
 export {
-  handleInitialCards,
   initCard,
   formAddElement,
   popupAddConteiner,
