@@ -10,7 +10,8 @@ import {profileEditButton, profileAddButton, closeButtons, avatarEditButton} fro
 // import {fillCards, getUserData, sendAvatar, sendCard} from "./components/api";
 
 import Api from '/src/components/api';
-import FormValidator from '/src/components/validate'
+import FormValidator from '/src/components/validate' 
+import Card from '/src/components/card'
 
 const config = {
   inputSelector: '.popup__input',
@@ -36,8 +37,6 @@ cardFormValidator.enableValidation();
 const profileAvatarFormValidator = new FormValidator(config, avatarForm);
 profileAvatarFormValidator.enableValidation();
 
-
-
 const api = new Api({
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-15',
   headers: {
@@ -45,6 +44,17 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
+
+const createCard = (data) => {
+  const card = new Card({
+    data: data,
+    cardSelector: '#element__template',
+  });
+  const cardElement = card.generateCard();
+  return cardElement;  
+}
+
+//======================================================================================================
 
 // Добавляем событие "openPopup" на попап с редактированием профиля
 profileEditButton.addEventListener('click', function () {
@@ -59,7 +69,7 @@ function handleSubmitCardForm(evt) {
   evt.preventDefault();
   api.sendCard(titleInput.value, linkInput.value)
     .then((res) => {
-      elementsNewList.prepend(initCard(res.name, res.link, res.likes.length, res.owner._id, res._id, res.likes));
+      elementsNewList.prepend(createCard(res));
       closePopup(popupAddConteiner);
     })
     .catch(err => {
@@ -130,7 +140,7 @@ Promise.all([api.getUserData(), api.fillCards()])
       api.fillCards()
         .then((res) => {
           res.forEach((res) => {
-            elementsNewList.append(initCard(res.name, res.link, res.likes.length, res.owner._id, res._id, res.likes));
+            elementsNewList.append(createCard(res));
           })
         })
         .catch(err => {
