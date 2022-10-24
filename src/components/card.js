@@ -1,5 +1,5 @@
 import {openPicturePopup} from "/src/components/modal.js";
-import {fillCards, deleteCard, toggleLike, getUserData} from "./api";
+// import {fillCards, deleteCard, toggleLike, getUserData} from "./api";
 
 const elementTemplate = document.querySelector('#element__template');
 const elementsNewList = document.querySelector('.elements__list');
@@ -9,10 +9,17 @@ const titleInput = formAddElement.querySelector('input[name="popup_input-title"]
 const linkInput = formAddElement.querySelector('input[name="popup_input-link"]');
 const cardButton = document.querySelector('.popup__button-submit-picture');
 
+import Api from '/src/components/api';
 
 const myUserId = {id: ''};
 
-
+const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-15',
+  headers: {
+    authorization: '50cb73c3-cd63-4207-b16a-8317dc26240b',
+    'Content-Type': 'application/json'
+  }
+});
 
 //Функция создания карточки
 function initCard(pictureName, pictureLink, numberofLikes, userId, cardId, detailedLikes) {
@@ -26,7 +33,7 @@ function initCard(pictureName, pictureLink, numberofLikes, userId, cardId, detai
   }
   cardDeleteButton.addEventListener('click', function () {
     const deletedElement = event.target.closest('.elements__element');
-    deleteCard(cardId)
+    api.deleteCard(cardId)
       .then((res) => {
         deletedElement.remove();
       })
@@ -49,7 +56,7 @@ function initCard(pictureName, pictureLink, numberofLikes, userId, cardId, detai
   }
   cardLikeButton.addEventListener('click', function (event) {
     if (event.target.classList.contains('elements_like_active')) {
-      toggleLike('DELETE', cardId)
+      api.toggleLike('DELETE', cardId)
         .then((res) => {
           event.target.classList.toggle('elements_like_active');
           numberofLikes -= 1;
@@ -59,7 +66,7 @@ function initCard(pictureName, pictureLink, numberofLikes, userId, cardId, detai
           console.error(err);
         })
     } else {
-      toggleLike('PUT', cardId)
+      api.toggleLike('PUT', cardId)
         .then((res) => {
           event.target.classList.toggle('elements_like_active');
           numberofLikes += 1;

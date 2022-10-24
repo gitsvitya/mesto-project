@@ -7,7 +7,17 @@ import {formAddElement, popupAddConteiner, titleInput, linkInput, elementsNewLis
 import {openPopup, closePopup, popupEditConteiner, popupAvatarConteiner, formEditAvatar} from '/src/components/modal.js';
 import {handleProfileFormSubmit, profileName, profileDescription, profileAvatar, nameInput, descriptionInput, formEditElement, avatarInput, avatarImage, avatarButton, profileButton} from '/src/components/profile.js';
 import {profileEditButton, profileAddButton, closeButtons, avatarEditButton} from './components/constants.js';
-import {fillCards, getUserData, sendAvatar, sendCard} from "./components/api";
+// import {fillCards, getUserData, sendAvatar, sendCard} from "./components/api";
+
+import Api from '/src/components/api';
+
+const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-15',
+  headers: {
+    authorization: '50cb73c3-cd63-4207-b16a-8317dc26240b',
+    'Content-Type': 'application/json'
+  }
+});
 
 // Добавляем событие "openPopup" на попап с редактированием профиля
 profileEditButton.addEventListener('click', function () {
@@ -20,7 +30,7 @@ profileEditButton.addEventListener('click', function () {
 function handleSubmitCardForm(evt) {
   cardButton.textContent = 'Сохранение...';
   evt.preventDefault();
-  sendCard(titleInput.value, linkInput.value)
+  api.sendCard(titleInput.value, linkInput.value)
     .then((res) => {
       elementsNewList.prepend(initCard(res.name, res.link, res.likes.length, res.owner._id, res._id, res.likes));
       closePopup(popupAddConteiner);
@@ -40,7 +50,7 @@ function handleSubmitCardForm(evt) {
 function handleProfileAvatarSubmit(event) {
   avatarButton.textContent = 'Сохранение...';
   event.preventDefault();
-  sendAvatar(avatarInput.value)
+  api.sendAvatar(avatarInput.value)
     .then((res) => {
       avatarImage.style.backgroundImage = `url(${avatarInput.value})`;
       closePopup(popupAvatarConteiner);
@@ -86,11 +96,11 @@ enableValidation({
   errorClass: 'form_input-error_active'
 });
 
-Promise.all([getUserData(), fillCards()])
+Promise.all([api.getUserData(), api.fillCards()])
   .then((values) => {
     // Функция заполнения первоначальных карточек с сервера
     function handleInitialCards() {
-      fillCards()
+      api.fillCards()
         .then((res) => {
           res.forEach((res) => {
             elementsNewList.append(initCard(res.name, res.link, res.likes.length, res.owner._id, res._id, res.likes));
