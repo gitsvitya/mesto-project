@@ -10,6 +10,33 @@ import {profileEditButton, profileAddButton, closeButtons, avatarEditButton} fro
 // import {fillCards, getUserData, sendAvatar, sendCard} from "./components/api";
 
 import Api from '/src/components/api';
+import FormValidator from '/src/components/validate'
+
+const config = {
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button-submit',
+  inactiveButtonClass: 'popup_button-submit-disabled',
+  inputErrorClass: 'form_input_type_error',
+  errorClass: 'form_input-error_active'
+};
+
+const editForm = document.querySelector('.popup_edit_form');
+const addForm = document.querySelector('.popup_add_form');
+const avatarForm = document.querySelector('.popup_avatar_form');
+
+// Экземпляр класса валидации для формы редактирования профиля
+const profileDescriptionFormValidator = new FormValidator(config, editForm);
+profileDescriptionFormValidator.enableValidation();
+
+// Экземпляр класса валидации для формы добавления новой карточки
+const cardFormValidator = new FormValidator(config, addForm);
+cardFormValidator.enableValidation();
+
+// Экземпляр класса валидации для формы редактирования аватара пользователя
+const profileAvatarFormValidator = new FormValidator(config, avatarForm);
+profileAvatarFormValidator.enableValidation();
+
+
 
 const api = new Api({
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-15',
@@ -87,14 +114,14 @@ formAddElement.addEventListener('submit', handleSubmitCardForm);
 formEditAvatar.addEventListener('submit', handleProfileAvatarSubmit);
 
 // Функция проверки валидации
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button-submit',
-  inactiveButtonClass: 'popup_button-submit-disabled',
-  inputErrorClass: 'form_input_type_error',
-  errorClass: 'form_input-error_active'
-});
+// enableValidation({
+//   formSelector: '.popup__form',
+//   inputSelector: '.popup__input',
+//   submitButtonSelector: '.popup__button-submit',
+//   inactiveButtonClass: 'popup_button-submit-disabled',
+//   inputErrorClass: 'form_input_type_error',
+//   errorClass: 'form_input-error_active'
+// });
 
 Promise.all([api.getUserData(), api.fillCards()])
   .then((values) => {
