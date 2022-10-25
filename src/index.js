@@ -18,6 +18,7 @@ import Card from '/src/components/card'
 import Section from '/src/components/section.js';
 import PopupWithImage from './components/popupWithImage';
 import PopupWithForm from './components/popupWithForm';
+import UserInfo from "/src/components/userInfo.js";
 
 const config = {
   inputSelector: '.popup__input',
@@ -100,6 +101,16 @@ const AvatarPopupWithForm = new PopupWithForm({
 });
 
 //===================================================================================================================
+//     Экземпляр класса, отвечающий за отображение информации о пользователе
+//-------------------------------------------------------------------------------------------------------------------
+
+const userInfo = new UserInfo({
+  name: '.profile__name',
+  about: '.profile__description',
+  //avatar: '.profile__avatar'
+});
+
+//===================================================================================================================
 //     Экземпляр класса, отвечающий за попап с формой редактирования профиля
 //-------------------------------------------------------------------------------------------------------------------
 
@@ -109,8 +120,9 @@ const ProfilePopupWithForm = new PopupWithForm({
     profileButton.textContent = 'Сохранение...';
     api.sendProfileData(nameInput.value, descriptionInput.value)
       .then((res) => {
-        profileName.textContent = nameInput.value;
-        profileDescription.textContent = descriptionInput.value;
+        userInfo.setUserInfo(nameInput, descriptionInput);
+        // profileName.textContent = nameInput.value;
+        // profileDescription.textContent = descriptionInput.value;
         ProfilePopupWithForm.closePopup();
       })
       .catch(err => {
@@ -264,9 +276,9 @@ Promise.all([api.getUserData(), api.fillCards()])
           console.error(err);
         });
     }
-
-    profileName.textContent = values[0].name;
-    profileDescription.textContent = values[0].about;
+    userInfo.getUserInfo(values[0]);
+    // profileName.textContent = values[0].name;
+    // profileDescription.textContent = values[0].about;
     profileAvatar.style.backgroundImage = `url(${values[0].avatar})`;
     myUserId.id = values[0]._id;
     handleInitialCards(values[1])
