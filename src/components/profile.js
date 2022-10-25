@@ -1,6 +1,6 @@
 // Функция редактирования имени и информации в профиле
 import {
-  closePopup,
+  // closePopup,
   popupEditConteiner,
   formEditElement,
   formEditAvatar

@@ -4,15 +4,19 @@ import './pages/index.css';
 //Импорты
 import {enableValidation} from "/src/components/validate.js";
 import {formAddElement, popupAddConteiner, titleInput, linkInput, elementsNewList, cardButton, initCard, myUserId} from '/src/components/card.js';
-import {openPopup, closePopup, popupEditConteiner, popupAvatarConteiner, formEditAvatar} from '/src/components/modal.js';
+import {
+  // openPopup,
+  // closePopup,
+  popupEditConteiner, popupAvatarConteiner, formEditAvatar} from '/src/components/modal.js';
 import {handleProfileFormSubmit, profileName, profileDescription, profileAvatar, nameInput, descriptionInput, formEditElement, avatarInput, avatarImage, avatarButton, profileButton} from '/src/components/profile.js';
 import {profileEditButton, profileAddButton, closeButtons, avatarEditButton} from './components/constants.js';
 // import {fillCards, getUserData, sendAvatar, sendCard} from "./components/api";
 
 import Api from '/src/components/api';
-import FormValidator from '/src/components/validate' 
+import FormValidator from '/src/components/validate'
 import Card from '/src/components/card'
 import Section from '/src/components/section.js';
+import PopupWithImage from './components/popupWithImage';
 
 const config = {
   inputSelector: '.popup__input',
@@ -48,14 +52,21 @@ const api = new Api({
   }
 });
 
+// Создание экземпляра класса PopupWithImage
+const popupWithImage = new PopupWithImage('.popup_picture');
+
 // Создание экземпляра класса Card
 const createCard = (data) => {
   const card = new Card({
     data: data,
     cardSelector: '#element__template',
+    handleCardClick: (name, link) => {
+      popupWithImage.setEventListeners();
+      popupWithImage.openPopup(name, link);
+    }
   });
   const cardElement = card.generateCard();
-  return cardElement;  
+  return cardElement;
 }
 
 // Создание экземпляра класса Section

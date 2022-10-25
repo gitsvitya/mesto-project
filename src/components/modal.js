@@ -1,5 +1,4 @@
-const popupPictureImage = document.querySelector('.popup__picture-image');
-const popupPictureDescription = document.querySelector('.popup__picture-figcaption');
+
 const popupPictureContainer = document.querySelector('.popup_picture');
 const popupEditConteiner = document.querySelector('.popup_profile-edit');
 const formEditElement = popupEditConteiner.querySelector('.popup_edit_form');
@@ -7,50 +6,52 @@ const popupAvatarConteiner = document.querySelector('.popup_avatar-edit');
 const formEditAvatar = popupAvatarConteiner.querySelector('.popup_avatar_form');
 
 
-//Функция открытия попапа
-function openPopup(container) {
-  container.classList.add('popup_opened');
-  document.addEventListener('keydown', handleEscape);
-  container.addEventListener('mousedown', handleOverlay);
-}
-
-// Функция открытия попапа с картинкой, addEventListener присваивается при ее создании
-function openPicturePopup(pictureLink, pictureName) {
-  popupPictureImage.setAttribute('src', pictureLink);
-  popupPictureImage.setAttribute('alt', pictureName);
-  popupPictureDescription.textContent = pictureName;
-  openPopup(popupPictureContainer);
-}
-
-// Функция закрытия popup по escape
-const handleEscape = (evt) => {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup);
+export default class Popup {
+  constructor(popupSelector) {
+    this._popup = document.querySelector(popupSelector);
+    this._closeBtn = this._popup.querySelector('.popup__close-button');
+    this._closeEscape = this._handleEscape.bind(this);
   }
-};
 
-//Функция закрытия popup по клику
-const handleOverlay = (evt) => {
-  if (evt.target === evt.currentTarget) {
-    closePopup(evt.currentTarget);
+  //Функция открытия попапа
+  openPopup() {
+    this._popup.classList.add('popup_opened');
+    document.addEventListener('keydown', this._closeEscape);
   }
-};
 
-//Функция закрытия попапа
-function closePopup(container) {
-  container.classList.remove('popup_opened');
-  document.removeEventListener('keydown', handleEscape);
-  container.removeEventListener('mousedown', handleOverlay);
+  //Функция закрытия попапа
+  closePopup() {
+    this._popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', this._closeEscape);
+  }
+
+  // Функция закрытия popup по escape
+  _handleEscape(evt) {
+    if (evt.key === 'Escape') {
+      this.closePopup();
+    }
+  }
+
+  setEventListeners() {
+    this._closeBtn.addEventListener('click', () => {
+      this.closePopup();
+    });
+    this._popup.addEventListener('mousedown', (evt) => {
+      if (evt.target === evt.currentTarget) {
+        this.closePopup();
+      }
+    });
+  }
 }
 
 export {
-  openPicturePopup,
-  openPopup,
-  closePopup,
+  // openPicturePopup,
+  // openPopup,
+  // closePopup,
   popupPictureContainer,
   popupEditConteiner,
   formEditElement,
   popupAvatarConteiner,
   formEditAvatar
 };
+
