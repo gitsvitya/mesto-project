@@ -12,6 +12,7 @@ import {profileEditButton, profileAddButton, closeButtons, avatarEditButton} fro
 import Api from '/src/components/api';
 import FormValidator from '/src/components/validate' 
 import Card from '/src/components/card'
+import Section from '/src/components/section.js';
 
 const config = {
   inputSelector: '.popup__input',
@@ -37,6 +38,8 @@ cardFormValidator.enableValidation();
 const profileAvatarFormValidator = new FormValidator(config, avatarForm);
 profileAvatarFormValidator.enableValidation();
 
+
+// Создание экземпляра класса Api
 const api = new Api({
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-15',
   headers: {
@@ -45,6 +48,7 @@ const api = new Api({
   }
 });
 
+// Создание экземпляра класса Card
 const createCard = (data) => {
   const card = new Card({
     data: data,
@@ -53,6 +57,13 @@ const createCard = (data) => {
   const cardElement = card.generateCard();
   return cardElement;  
 }
+
+// Создание экземпляра класса Section
+const cardsList = new Section({
+  renderer: (items) => {
+    cardsList.addItem(createCard(items));
+  },
+}, '.elements__list');
 
 //======================================================================================================
 
@@ -69,7 +80,7 @@ function handleSubmitCardForm(evt) {
   evt.preventDefault();
   api.sendCard(titleInput.value, linkInput.value)
     .then((res) => {
-      elementsNewList.prepend(createCard(res));
+      cardsList.addItem(createCard(res));
       closePopup(popupAddConteiner);
     })
     .catch(err => {
@@ -140,7 +151,7 @@ Promise.all([api.getUserData(), api.fillCards()])
       api.fillCards()
         .then((res) => {
           res.forEach((res) => {
-            elementsNewList.append(createCard(res));
+            cardsList.initItem(createCard(res));
           })
         })
         .catch(err => {
