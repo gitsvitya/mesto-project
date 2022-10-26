@@ -15,6 +15,3 @@ export default class PopupWithImage extends Popup {
     super.openPopup();
   }
 }
-
-// const popupPictureImage = document.querySelector('.popup__picture-image');
-// const popupPictureDescription = document.querySelector('.popup__picture-figcaption');

@@ -1,16 +1,11 @@
-//Импорт index.css для корректной сборки Webpack
+//===================================================================================================================
+// Импорты
+//-------------------------------------------------------------------------------------------------------------------
 import './pages/index.css';
 
-//Импорты
-import {enableValidation} from "/src/components/validate.js";
-import {formAddElement, popupAddConteiner, titleInput, linkInput, elementsNewList, cardButton, initCard, myUserId} from '/src/components/card.js';
-import {
-  // openPopup,
-  // closePopup,
-  popupEditConteiner, popupAvatarConteiner, formEditAvatar} from '/src/components/modal.js';
-import {handleProfileFormSubmit, profileName, profileDescription, profileAvatar, nameInput, descriptionInput, formEditElement, avatarInput, avatarImage, avatarButton, profileButton} from '/src/components/profile.js';
-import {profileEditButton, profileAddButton, closeButtons, avatarEditButton} from './components/constants.js';
-// import {fillCards, getUserData, sendAvatar, sendCard} from "./components/api";
+import {titleInput, linkInput, cardButton, myUserId} from '/src/components/card.js';
+import {profileName, profileDescription, profileAvatar, nameInput, descriptionInput, avatarInput, avatarImage, avatarButton, profileButton} from '/src/components/profile.js';
+import {profileEditButton, profileAddButton, avatarEditButton} from './components/constants.js';
 
 import Api from '/src/components/api';
 import FormValidator from '/src/components/validate'
@@ -43,7 +38,6 @@ cardFormValidator.enableValidation();
 // Экземпляр класса валидации для формы редактирования аватара пользователя
 const profileAvatarFormValidator = new FormValidator(config, avatarForm);
 profileAvatarFormValidator.enableValidation();
-
 
 // Создание экземпляра класса Api
 const api = new Api({
@@ -82,8 +76,8 @@ const cardsList = new Section({
 //     Экземпляр класса, отвечающий за попап с формой редактирования аватара
 //-------------------------------------------------------------------------------------------------------------------
 
-const AvatarPopupWithForm = new PopupWithForm({ 
-  popupSelector: '.popup_avatar-edit', 
+const AvatarPopupWithForm = new PopupWithForm({
+  popupSelector: '.popup_avatar-edit',
   formSubmit: () => {
     avatarButton.textContent = 'Сохранение...';
       api.sendAvatar(avatarInput.value)
@@ -97,7 +91,7 @@ const AvatarPopupWithForm = new PopupWithForm({
       .finally(() => {
         profileButton.textContent = 'Сохранить';
       })
-  } 
+  }
 });
 
 //===================================================================================================================
@@ -132,7 +126,7 @@ const ProfilePopupWithForm = new PopupWithForm({
         profileButton.textContent = 'Сохранить';
       })
   }
-});  
+});
 
 //===================================================================================================================
 //     Экземпляр класса, отвечающий за попап с формой добавления новой карточки
@@ -153,11 +147,11 @@ const CardPopupWithForm = new PopupWithForm({
       .finally(() => {
         cardButton.textContent = 'Создать';
      })
-  }  
+  }
 });
 
 //===================================================================================================================
-//     Добавление событий на кнопки 
+//     Добавление событий на кнопки
 //-------------------------------------------------------------------------------------------------------------------
 
 // На попап с добавлением новой карточки
@@ -183,84 +177,7 @@ avatarEditButton.addEventListener('click', function () {
 });
 AvatarPopupWithForm.setEventListeners();
 
-//======================================================================================================
 
-// Добавляем событие "openPopup" на попап с редактированием профиля
-// profileEditButton.addEventListener('click', function () {
-//   openPopup(popupEditConteiner);
-//   nameInput.value = profileName.textContent;
-//   descriptionInput.value = profileDescription.textContent;
-// });
-
-// Обработчик сабмита формы
-// function handleSubmitCardForm(evt) {
-//   cardButton.textContent = 'Сохранение...';
-//   evt.preventDefault();
-//   api.sendCard(titleInput.value, linkInput.value)
-//     .then((res) => {
-//       cardsList.addItem(createCard(res));
-//       closePopup(popupAddConteiner);
-//     })
-//     .catch(err => {
-//       console.error(err);
-//     })
-//     .finally(() => {
-//       cardButton.textContent = 'Создать';
-//     })
-//   formAddElement.reset();
-//   evt.submitter.classList.add('popup_button-submit-disabled');
-//   evt.submitter.setAttribute('disabled', true);
-// }
-
-// Функция обновления аватара и отправки на сервер
-// function handleProfileAvatarSubmit(event) {
-//   avatarButton.textContent = 'Сохранение...';
-//   event.preventDefault();
-//   api.sendAvatar(avatarInput.value)
-//     .then((res) => {
-//       avatarImage.style.backgroundImage = `url(${avatarInput.value})`;
-//       closePopup(popupAvatarConteiner);
-//     })
-//     .catch(err => {
-//       console.error(err);
-//     })
-//     .finally(() => {
-//       profileButton.textContent = 'Сохранить';
-//     })
-// }
-
-// avatarEditButton.addEventListener('click', function () {
-//   openPopup(popupAvatarConteiner);
-// });
-
-// closeButtons.forEach((button) => {
-//   const popup = button.closest('.popup');
-//   button.addEventListener('click', () => closePopup(popup));
-// });
-
-// Добавляем событие "openPopup" на попап с добавлением новой карточки
-// profileAddButton.addEventListener('click', function () {
-//   openPopup(popupAddConteiner);
-// });
-
-// Добавляем событие "submit" на попап с редактированием профиля
-//formEditElement.addEventListener('submit', handleProfileFormSubmit);
-
-//Добавляем событие "submit" на попап с добавленим новой карточки
-//formAddElement.addEventListener('submit', handleSubmitCardForm);
-
-// Добавляем событие "submit" на попап с добавлением аватара
-//formEditAvatar.addEventListener('submit', handleProfileAvatarSubmit);
-
-// Функция проверки валидации
-// enableValidation({
-//   formSelector: '.popup__form',
-//   inputSelector: '.popup__input',
-//   submitButtonSelector: '.popup__button-submit',
-//   inactiveButtonClass: 'popup_button-submit-disabled',
-//   inputErrorClass: 'form_input_type_error',
-//   errorClass: 'form_input-error_active'
-// });
 
 Promise.all([api.getUserData(), api.fillCards()])
   .then((values) => {

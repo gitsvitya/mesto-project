@@ -76,7 +76,4 @@ toggleButtonState() {
     this._buttonElement.removeAttribute('disabled');
   }
 };
-
 }
-// Экспор главной фукнции
-//export {enableValidation};

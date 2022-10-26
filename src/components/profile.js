@@ -1,11 +1,8 @@
 // Функция редактирования имени и информации в профиле
 import {
-  // closePopup,
-  popupEditConteiner,
   formEditElement,
   formEditAvatar
 } from "/src/components/modal";
-// import {sendProfileData} from "/src/components/api";
 
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
@@ -27,26 +24,7 @@ const api = new Api({
   }
 });
 
-// Функция заполнения и отправки данных профиля (кроме аватара)
-function handleProfileFormSubmit(event) {
-  profileButton.textContent = 'Сохранение...';
-  event.preventDefault();
-  api.sendProfileData(nameInput.value, descriptionInput.value)
-    .then((res) => {
-      profileName.textContent = nameInput.value;
-      profileDescription.textContent = descriptionInput.value;
-      closePopup(popupEditConteiner);
-    })
-    .catch(err => {
-      console.error(err);
-    })
-    .finally(() => {
-      profileButton.textContent = 'Сохранить';
-    })
-}
-
 export {
-  handleProfileFormSubmit,
   profileName,
   profileDescription,
   profileAvatar,

@@ -1,7 +1,3 @@
-// import {openPicturePopup} from "/src/components/modal.js";
-
-const elementTemplate = document.querySelector('#element__template');
-const elementsNewList = document.querySelector('.elements__list');
 const popupAddConteiner = document.querySelector('.popup_add-picture');
 const formAddElement = popupAddConteiner.querySelector('.popup_add_form');
 const titleInput = formAddElement.querySelector('input[name="popup_input-title"]');
@@ -24,10 +20,10 @@ const api = new Api({
 });
 
 //===================================================================================================================
-//     Класс Card 
+//     Класс Card
 //-------------------------------------------------------------------------------------------------------------------
 
-export default class Card { 
+export default class Card {
   constructor({ data, cardSelector, handleCardClick /* handleDeleteClick, toggleLikeClick,*/}) {
     this._name = data.name;
     this._link = data.link;
@@ -36,7 +32,7 @@ export default class Card {
     this._cardId = data._id;
     this._detailedLikes = data.likes;
 
-    this._handleCardClick = handleCardClick; // слушатель просмотра изображения 
+    this._handleCardClick = handleCardClick; // слушатель просмотра изображения
     //this._handleDeleteIconClick = handleDeleteIconClick; // слушатель кнопки удаления карточки
     //this._toggleLike = toggleLike; // слушатель кнопки лайк
 
@@ -55,7 +51,7 @@ export default class Card {
 
     return this._card;
   }
-  
+
 //--------------------------------------------------------
    // Метод создания карточки
    generateCard() {
@@ -72,7 +68,7 @@ export default class Card {
 
     this._setEventListeners(); // Вешаем слушатели на карточку
     this._DeleteBtn(); // проверяем владельца карточки и убираем кнопку Delete
-    this._isCardLiked(); // Проверка, стоит ли лайк на карточке 
+    this._isCardLiked(); // Проверка, стоит ли лайк на карточке
 
     return this._element;
   }
@@ -86,7 +82,7 @@ export default class Card {
   }
 
 //---------------------------------------------------------
-  // Проверка, стоит ли лайк на карточке 
+  // Проверка, стоит ли лайк на карточке
   _isCardLiked() {
     if (this._detailedLikes !== undefined) {
       for (let i = 0; i < this._detailedLikes.length; i++) {
@@ -102,11 +98,11 @@ export default class Card {
   _setEventListeners() {
 
     // слушатель просмотра изображения
-    this._image.addEventListener('click', () => { 
+    this._image.addEventListener('click', () => {
       this._handleCardClick(this._name, this._link)
     });
 
-    // слушатель кнопки удаления 
+    // слушатель кнопки удаления
     this._deleteBtn.addEventListener('click', (evt) => {
       const deletedElement = evt.target.closest('.elements__element');
       deletedElement.remove();
@@ -135,7 +131,7 @@ export default class Card {
             this._likes += 1;
             this._likesNumber.textContent = this._likes;
           })
-          .catch(err => { 
+          .catch(err => {
             console.error(err);
           })
       }
@@ -144,76 +140,11 @@ export default class Card {
 
 }
 
-//===================================================================================================================
-
-//Функция создания карточки
-// function initCard(pictureName, pictureLink, numberofLikes, userId, cardId, detailedLikes) {
-//   const elementFromTemplate = elementTemplate.content.querySelector('.elements__element').cloneNode(true);
-//   const elementFromTemplatePicture = elementFromTemplate.querySelector('.elements__picture');
-//   const elementFromTemplateLikes = elementFromTemplate.querySelector('.elements__like-number');
-//   const cardDeleteButton = elementFromTemplate.querySelector('.elements__delete');
-//   const cardLikeButton = elementFromTemplate.querySelector('.elements__like');
-
-//   if (userId !== myUserId.id) {
-//     cardDeleteButton.classList.add("elements_delete_disable");
-//   }
-//   cardDeleteButton.addEventListener('click', function () {
-//     const deletedElement = event.target.closest('.elements__element');
-//     api.deleteCard(cardId)
-//       .then((res) => {
-//         deletedElement.remove();
-//       })
-//       .catch(err => {
-//         console.error(err);
-//       })
-//   });
-//   elementFromTemplatePicture.src = pictureLink;
-//   elementFromTemplatePicture.alt = pictureName;
-//   elementFromTemplateLikes.textContent = numberofLikes;
-//   elementFromTemplate.querySelector('.elements__name').textContent = pictureName;
-
-//   // Проверяем лайкали ли мы фотку до этого по userid лайкнувших от сервера, сравнивая с нашим id
-//   if (detailedLikes !== undefined) {
-//     for (let i = 0; i < detailedLikes.length; i++) {
-//       if (detailedLikes[i]._id === myUserId.id) {
-//         cardLikeButton.classList.add('elements_like_active');
-//       }
-//     }
-//   }
-//   cardLikeButton.addEventListener('click', function (event) {
-//     if (event.target.classList.contains('elements_like_active')) {
-//       api.toggleLike('DELETE', cardId)
-//         .then((res) => {
-//           event.target.classList.toggle('elements_like_active');
-//           numberofLikes -= 1;
-//           elementFromTemplateLikes.textContent = numberofLikes;
-//         })
-//         .catch(err => {
-//           console.error(err);
-//         })
-//     } else {
-//       api.toggleLike('PUT', cardId)
-//         .then((res) => {
-//           event.target.classList.toggle('elements_like_active');
-//           numberofLikes += 1;
-//           elementFromTemplateLikes.textContent = numberofLikes;
-//         })
-//         .catch(err => { 
-//           console.error(err);
-//         })
-//     }
-//   });
-//   elementFromTemplatePicture.addEventListener('click', () => openPicturePopup(pictureLink, pictureName));
-//   return elementFromTemplate;
-// }
-
 export {
-  //initCard,
   formAddElement,
   popupAddConteiner,
   titleInput,
   linkInput,
-  elementsNewList,
   cardButton,
   myUserId
 };

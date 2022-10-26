@@ -78,15 +78,3 @@ export default class Api {
   }
 }
 
-
-
-
-
-// const config = {
-//   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-15',
-//   headers: {
-//     authorization: '50cb73c3-cd63-4207-b16a-8317dc26240b',
-//     'Content-Type': 'application/json'
-//   }
-// }
-// export {getUserData, fillCards, sendProfileData, sendCard, deleteCard, toggleLike, sendAvatar};
