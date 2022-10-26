@@ -87,7 +87,7 @@ const ProfilePopupWithForm = new PopupWithForm({
     profileButton.textContent = 'Сохранение...';
     api.sendProfileData(nameInput.value, descriptionInput.value)
       .then((res) => {
-        userInfo.setUserInfo(nameInput, descriptionInput);
+        userInfo.setUserInfo(res);
         ProfilePopupWithForm.closePopup();
       })
       .catch(err => {
@@ -129,8 +129,10 @@ CardPopupWithForm.setEventListeners();
 profileEditButton.addEventListener('click', function () {
   ProfilePopupWithForm.openPopup();
   profileDescriptionFormValidator.toggleButtonState();
-  nameInput.value = profileName.textContent;
-  descriptionInput.value = profileDescription.textContent;
+
+  const info = userInfo.getUserInfo();
+  nameInput.value = info.name;
+  descriptionInput.value = info.about;
 });
 ProfilePopupWithForm.setEventListeners();
 
@@ -155,7 +157,7 @@ Promise.all([api.getUserData(), api.fillCards()])
           console.error(err);
         });
     }
-    userInfo.getUserInfo(api.getUserData.bind(api))
+    userInfo.setUserInfo(values[0]);
     profileAvatar.style.backgroundImage = `url(${values[0].avatar})`;
     myUserId.id = values[0]._id;
     handleInitialCards(values[1])
