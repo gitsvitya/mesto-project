@@ -19,7 +19,7 @@ export default class Api {
       .then(res => this._getResponseData(res));
   }
 
-  fillCards () {
+  fillCards() {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'GET',
       headers: this._headers
@@ -50,6 +50,7 @@ export default class Api {
     })
       .then(res => this._getResponseData(res));
   }
+
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',

@@ -8,7 +8,7 @@ export default class PopupWithImage extends Popup {
   }
 
   // Функция открытия попапа с картинкой, addEventListener присваивается при ее создании
-  openPopup (name, link) {
+  openPopup(name, link) {
     this._popupPictureImage.src = link;
     this._popupPictureImage.alt = name;
     this._popupPictureDescription.textContent = name;

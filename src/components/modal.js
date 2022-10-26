@@ -1,8 +1,3 @@
-const popupEditConteiner = document.querySelector('.popup_profile-edit');
-const formEditElement = popupEditConteiner.querySelector('.popup_edit_form');
-const popupAvatarConteiner = document.querySelector('.popup_avatar-edit');
-const formEditAvatar = popupAvatarConteiner.querySelector('.popup_avatar_form');
-
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
@@ -40,11 +35,4 @@ export default class Popup {
     });
   }
 }
-
-export {
-  popupEditConteiner,
-  formEditElement,
-  popupAvatarConteiner,
-  formEditAvatar
-};
 

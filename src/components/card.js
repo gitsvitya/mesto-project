@@ -1,15 +1,6 @@
-const popupAddConteiner = document.querySelector('.popup_add-picture');
-const formAddElement = popupAddConteiner.querySelector('.popup_add_form');
-const titleInput = formAddElement.querySelector('input[name="popup_input-title"]');
-const linkInput = formAddElement.querySelector('input[name="popup_input-link"]');
-const cardButton = document.querySelector('.popup__button-submit-picture');
-const myUserId = {id: ''};
+import {myUserId} from './constants.js';
 
-//===================================================================================================================
-// Экземпляр класса Api. (Нужен для deleteCard и toggleLike) (Убрать. deleteCard и toggleLike перенести в index.js)
-//-------------------------------------------------------------------------------------------------------------------
-
-import Api from "./api";
+import Api from "./api.js";
 
 const api = new Api({
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-15',
@@ -19,12 +10,8 @@ const api = new Api({
   }
 });
 
-//===================================================================================================================
-//     Класс Card
-//-------------------------------------------------------------------------------------------------------------------
-
 export default class Card {
-  constructor({ data, cardSelector, handleCardClick /* handleDeleteClick, toggleLikeClick,*/}) {
+  constructor({data, cardSelector, handleCardClick}) {
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes.length;
@@ -32,29 +19,24 @@ export default class Card {
     this._cardId = data._id;
     this._detailedLikes = data.likes;
 
-    this._handleCardClick = handleCardClick; // слушатель просмотра изображения
-    //this._handleDeleteIconClick = handleDeleteIconClick; // слушатель кнопки удаления карточки
-    //this._toggleLike = toggleLike; // слушатель кнопки лайк
+    this._handleCardClick = handleCardClick;
 
     this._cardSelector = cardSelector;
   }
 
-//--------------------------------------------------------
-
   // Получаем шаблон карточки
   _getTemplate() {
     this._card = document
-    .querySelector(this._cardSelector)
-    .content
-    .querySelector('.elements__element')
-    .cloneNode(true);
+      .querySelector(this._cardSelector)
+      .content
+      .querySelector('.elements__element')
+      .cloneNode(true);
 
     return this._card;
   }
 
-//--------------------------------------------------------
-   // Метод создания карточки
-   generateCard() {
+  // Метод создания карточки
+  generateCard() {
     this._element = this._getTemplate();
     this._image = this._element.querySelector('.elements__picture');
     this._likesNumber = this._element.querySelector('.elements__like-number');
@@ -73,7 +55,6 @@ export default class Card {
     return this._element;
   }
 
-//---------------------------------------------------------
   // проверяем владельца карточки и убираем кнопку Delete
   _DeleteBtn() {
     if (this._userId !== myUserId.id) {
@@ -81,7 +62,6 @@ export default class Card {
     }
   }
 
-//---------------------------------------------------------
   // Проверка, стоит ли лайк на карточке
   _isCardLiked() {
     if (this._detailedLikes !== undefined) {
@@ -93,26 +73,24 @@ export default class Card {
     }
   }
 
-//---------------------------------------------------------
-  // Вешаем слушатели на карточку
   _setEventListeners() {
 
-    // слушатель просмотра изображения
+    // Вешаем слушатель просмотра изображения
     this._image.addEventListener('click', () => {
       this._handleCardClick(this._name, this._link)
     });
 
-    // слушатель кнопки удаления
+    // Вешаем слушатель кнопки удаления
     this._deleteBtn.addEventListener('click', (evt) => {
       const deletedElement = evt.target.closest('.elements__element');
       deletedElement.remove();
       api.deleteCard(this._cardId)
         .catch(err => {
           console.error(err);
-       })
+        })
     });
 
-    // слушатель кнопки лайк
+    // Вешаем слушатель кнопки лайк
     this._likeBtn.addEventListener('click', (evt) => {
       if (evt.target.classList.contains('elements_like_active')) {
         api.toggleLike('DELETE', this._cardId)
@@ -137,14 +115,4 @@ export default class Card {
       }
     });
   }
-
 }
-
-export {
-  formAddElement,
-  popupAddConteiner,
-  titleInput,
-  linkInput,
-  cardButton,
-  myUserId
-};

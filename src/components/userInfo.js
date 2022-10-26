@@ -1,11 +1,10 @@
 export default class UserInfo {
-  constructor({ name, about }) {
+  constructor({name, about}) {
     this._name = document.querySelector(name);
     this._about = document.querySelector(about);
   }
 
   // принимает новые данные пользователя и добавляет их на страницу
-
   getUserInfo(api) {
     api()
       .then((data) => {
