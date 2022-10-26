@@ -1,7 +1,7 @@
 // Импорты
 import './pages/index.css';
 
-import {profileEditButton, profileAddButton, avatarEditButton, titleInput, linkInput, cardButton, myUserId, profileName, profileDescription, profileAvatar, nameInput, descriptionInput, avatarInput, avatarImage, avatarButton, profileButton, config} from './components/constants.js';
+import {profileEditButton, profileAddButton, avatarEditButton, titleInput, linkInput, cardButton, myUserId, profileName, profileDescription, profileAvatar, nameInput, descriptionInput, avatarInput, avatarImage, avatarButton, profileButton, config, editForm, addForm, avatarForm} from './components/constants.js';
 
 import Api from '/src/components/api';
 import FormValidator from '/src/components/validate'
@@ -10,10 +10,6 @@ import Section from '/src/components/section.js';
 import PopupWithImage from './components/popupWithImage';
 import PopupWithForm from './components/popupWithForm';
 import UserInfo from "/src/components/userInfo.js";
-
-const editForm = document.querySelector('.popup_edit_form');
-const addForm = document.querySelector('.popup_add_form');
-const avatarForm = document.querySelector('.popup_avatar_form');
 
 // Экземпляр класса валидации для формы редактирования профиля
 const profileDescriptionFormValidator = new FormValidator(config, editForm);
@@ -55,7 +51,7 @@ const createCard = (data) => {
 // Создание экземпляра класса Section
 const cardsList = new Section({
   renderer: (items) => {
-    cardsList.addItem(createCard(items));
+    cardsList.renderItems(createCard(items));
   },
 }, '.elements__list');
 
@@ -79,14 +75,12 @@ const AvatarPopupWithForm = new PopupWithForm({
 });
 
 // Создание экземпляра класса, отвечающего за отображение информации о пользователе
-
 const userInfo = new UserInfo({
   name: '.profile__name',
   about: '.profile__description',
 });
 
 // Создание экземпляра класса, отвечающего за попап с формой редактирования профиля
-
 const ProfilePopupWithForm = new PopupWithForm({
   popupSelector: '.popup_profile-edit',
   formSubmit: () => {
@@ -106,7 +100,6 @@ const ProfilePopupWithForm = new PopupWithForm({
 });
 
 // Создание экземпляра класса, отвечающий за попап с формой добавления новой карточки
-
 const CardPopupWithForm = new PopupWithForm({
   popupSelector: '.popup_add-picture',
   formSubmit: () => {

@@ -24,5 +24,4 @@ export default class UserInfo {
     this._name.textContent = inputName.value;
     this._about.textContent = inputDescription.value;
   }
-
 }

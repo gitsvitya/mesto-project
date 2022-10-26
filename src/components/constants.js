@@ -20,6 +20,9 @@ const avatarInput = formEditAvatar.querySelector('input[name="popup_input-avatar
 const avatarImage = document.querySelector('.profile__avatar');
 const avatarButton = document.querySelector('.popup__button-submit-avatar');
 const profileButton = document.querySelector('.popup__button-submit-profile');
+const editForm = document.querySelector('.popup_edit_form');
+const addForm = document.querySelector('.popup_add_form');
+const avatarForm = document.querySelector('.popup_avatar_form');
 
 const config = {
   inputSelector: '.popup__input',
@@ -52,5 +55,8 @@ export {
   avatarImage,
   avatarButton,
   profileButton,
-  config
+  config,
+  editForm,
+  addForm,
+  avatarForm
 };

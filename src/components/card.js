@@ -18,9 +18,7 @@ export default class Card {
     this._userId = data.owner._id;
     this._cardId = data._id;
     this._detailedLikes = data.likes;
-
     this._handleCardClick = handleCardClick;
-
     this._cardSelector = cardSelector;
   }
 
@@ -31,7 +29,6 @@ export default class Card {
       .content
       .querySelector('.elements__element')
       .cloneNode(true);
-
     return this._card;
   }
 
@@ -42,20 +39,17 @@ export default class Card {
     this._likesNumber = this._element.querySelector('.elements__like-number');
     this._deleteBtn = this._element.querySelector('.elements__delete');
     this._likeBtn = this._element.querySelector('.elements__like');
-
     this._image.src = this._link;
     this._image.alt = this._name;
     this._likesNumber.textContent = this._likes;
     this._element.querySelector('.elements__name').textContent = this._name;
-
-    this._setEventListeners(); // Вешаем слушатели на карточку
-    this._DeleteBtn(); // проверяем владельца карточки и убираем кнопку Delete
-    this._isCardLiked(); // Проверка, стоит ли лайк на карточке
-
+    this._setEventListeners();
+    this._DeleteBtn();
+    this._isCardLiked();
     return this._element;
   }
 
-  // проверяем владельца карточки и убираем кнопку Delete
+  // Проверяем владельца карточки и убираем кнопку Delete
   _DeleteBtn() {
     if (this._userId !== myUserId.id) {
       this._deleteBtn.classList.add("elements_delete_disable");
