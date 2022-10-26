@@ -3,7 +3,7 @@ const formAddElement = popupAddConteiner.querySelector('.popup_add_form');
 const titleInput = formAddElement.querySelector('input[name="popup_input-title"]');
 const linkInput = formAddElement.querySelector('input[name="popup_input-link"]');
 const cardButton = document.querySelector('.popup__button-submit-picture');
-const myUserId = {id: '50cb73c3-cd63-4207-b16a-8317dc26240b'};
+const myUserId = {id: ''};
 
 //===================================================================================================================
 // Экземпляр класса Api. (Нужен для deleteCard и toggleLike) (Убрать. deleteCard и toggleLike перенести в index.js)

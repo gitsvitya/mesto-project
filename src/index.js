@@ -193,7 +193,7 @@ Promise.all([api.getUserData(), api.fillCards()])
           console.error(err);
         });
     }
-    userInfo.getUserInfo(values[0]);
+    userInfo.getUserInfo(api.getUserData.bind(api))
     // profileName.textContent = values[0].name;
     // profileDescription.textContent = values[0].about;
     profileAvatar.style.backgroundImage = `url(${values[0].avatar})`;
