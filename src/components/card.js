@@ -1,24 +1,26 @@
-import {myUserId} from './constants.js';
+//import {myUserId} from './constants.js';
 
-import Api from "./api.js";
+// import Api from "./api.js";
 
-const api = new Api({
-  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-15',
-  headers: {
-    authorization: '50cb73c3-cd63-4207-b16a-8317dc26240b',
-    'Content-Type': 'application/json'
-  }
-});
+// const api = new Api({
+//   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-15',
+//   headers: {
+//     authorization: '50cb73c3-cd63-4207-b16a-8317dc26240b',
+//     'Content-Type': 'application/json'
+//   }
+// });
 
 export default class Card {
-  constructor({data, cardSelector, handleCardClick}) {
+  constructor({data, myUserId, cardSelector, handleCardClick, api}) {
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes.length;
     this._userId = data.owner._id;
     this._cardId = data._id;
     this._detailedLikes = data.likes;
+    this._myUserId = myUserId;
     this._handleCardClick = handleCardClick;
+    this._api = api;
     this._cardSelector = cardSelector;
   }
 
@@ -51,7 +53,7 @@ export default class Card {
 
   // Проверяем владельца карточки и убираем кнопку Delete
   _DeleteBtn() {
-    if (this._userId !== myUserId.id) {
+    if (this._userId !== this._myUserId) {
       this._deleteBtn.classList.add("elements_delete_disable");
     }
   }
@@ -60,7 +62,7 @@ export default class Card {
   _isCardLiked() {
     if (this._detailedLikes !== undefined) {
       for (let i = 0; i < this._detailedLikes.length; i++) {
-        if (this._detailedLikes[i]._id === myUserId.id) {
+        if (this._detailedLikes[i]._id === this._myUserId) {
           this._likeBtn.classList.add('elements_like_active');
         }
       }
@@ -77,8 +79,10 @@ export default class Card {
     // Вешаем слушатель кнопки удаления
     this._deleteBtn.addEventListener('click', (evt) => {
       const deletedElement = evt.target.closest('.elements__element');
-      deletedElement.remove();
-      api.deleteCard(this._cardId)
+      this._api.deleteCard(this._cardId)
+        .then(() => {
+          deletedElement.remove();
+        })
         .catch(err => {
           console.error(err);
         })
@@ -87,8 +91,8 @@ export default class Card {
     // Вешаем слушатель кнопки лайк
     this._likeBtn.addEventListener('click', (evt) => {
       if (evt.target.classList.contains('elements_like_active')) {
-        api.toggleLike('DELETE', this._cardId)
-          .then((res) => {
+        this._api.toggleLike('DELETE', this._cardId)
+          .then(() => {
             evt.target.classList.toggle('elements_like_active');
             this._likes -= 1;
             this._likesNumber.textContent = this._likes;
@@ -97,8 +101,8 @@ export default class Card {
             console.error(err);
           })
       } else {
-        api.toggleLike('PUT', this._cardId)
-          .then((res) => {
+        this._api.toggleLike('PUT', this._cardId)
+          .then(() => {
             evt.target.classList.toggle('elements_like_active');
             this._likes += 1;
             this._likesNumber.textContent = this._likes;

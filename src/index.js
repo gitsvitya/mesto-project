@@ -1,7 +1,7 @@
 // Импорты
 import './pages/index.css';
 
-import {profileEditButton, profileAddButton, avatarEditButton, titleInput, linkInput, cardButton, myUserId, profileName, profileDescription, profileAvatar, nameInput, descriptionInput, avatarInput, avatarImage, avatarButton, profileButton, config, editForm, addForm, avatarForm} from './components/constants.js';
+import {profileEditButton, profileAddButton, avatarEditButton, titleInput, linkInput, cardButton, myUserId, nameInput, descriptionInput, avatarInput, avatarButton, profileButton, config, editForm, addForm, avatarForm} from './components/constants.js';
 
 import Api from '/src/components/api';
 import FormValidator from '/src/components/validate'
@@ -34,16 +34,18 @@ const api = new Api({
 
 // Создание экземпляра класса PopupWithImage
 const popupWithImage = new PopupWithImage('.popup_picture');
+popupWithImage.setEventListeners();
 
 // Создание экземпляра класса Card
 const createCard = (data) => {
   const card = new Card({
     data: data,
+    myUserId: myUserId.id,
     cardSelector: '#element__template',
     handleCardClick: (name, link) => {
-      popupWithImage.setEventListeners();
       popupWithImage.openPopup(name, link);
-    }
+    },
+    api: api
   });
   return card.generateCard();
 }
@@ -62,14 +64,14 @@ const AvatarPopupWithForm = new PopupWithForm({
     avatarButton.textContent = 'Сохранение...';
     api.sendAvatar(avatarInput.value)
       .then((res) => {
-        avatarImage.style.backgroundImage = `url(${avatarInput.value})`;
+        userInfo.setUserInfo(res);
         AvatarPopupWithForm.closePopup();
       })
       .catch(err => {
         console.error(err);
       })
       .finally(() => {
-        profileButton.textContent = 'Сохранить';
+        avatarButton.textContent = 'Сохранить';
       })
   }
 });
@@ -78,6 +80,7 @@ const AvatarPopupWithForm = new PopupWithForm({
 const userInfo = new UserInfo({
   name: '.profile__name',
   about: '.profile__description',
+  avatar: '.profile__avatar'
 });
 
 // Создание экземпляра класса, отвечающего за попап с формой редактирования профиля
@@ -158,7 +161,6 @@ Promise.all([api.getUserData(), api.fillCards()])
         });
     }
     userInfo.setUserInfo(values[0]);
-    profileAvatar.style.backgroundImage = `url(${values[0].avatar})`;
     myUserId.id = values[0]._id;
     handleInitialCards(values[1])
   })
