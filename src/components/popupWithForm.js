@@ -1,4 +1,4 @@
-import Popup from "/src/components/modal.js";
+import Popup from "/src/components/popup.js";
 
 export default class PopupWithForm extends Popup {
   constructor({popupSelector, formSubmit}) {

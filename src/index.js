@@ -3,12 +3,12 @@ import './pages/index.css';
 
 import {profileEditButton, profileAddButton, avatarEditButton, titleInput, linkInput, cardButton, myUserId, nameInput, descriptionInput, avatarInput, avatarButton, profileButton, config, editForm, addForm, avatarForm} from './components/constants.js';
 
-import Api from '/src/components/api';
-import FormValidator from '/src/components/validate'
-import Card from '/src/components/card'
+import Api from '/src/components/api.js';
+import FormValidator from '/src/components/FormValidator.js'
+import Card from '/src/components/card.js'
 import Section from '/src/components/section.js';
-import PopupWithImage from './components/popupWithImage';
-import PopupWithForm from './components/popupWithForm';
+import PopupWithImage from './components/popupWithImage.js';
+import PopupWithForm from './components/popupWithForm.js';
 import UserInfo from "/src/components/userInfo.js";
 
 // Экземпляр класса валидации для формы редактирования профиля
@@ -58,14 +58,14 @@ const cardsList = new Section({
 }, '.elements__list');
 
 //     Создание экземпляра класса, отвечающего за попап с формой редактирования аватара
-const AvatarPopupWithForm = new PopupWithForm({
+const avatarPopupWithForm = new PopupWithForm({
   popupSelector: '.popup_avatar-edit',
   formSubmit: () => {
     avatarButton.textContent = 'Сохранение...';
     api.sendAvatar(avatarInput.value)
       .then((res) => {
         userInfo.setUserInfo(res);
-        AvatarPopupWithForm.closePopup();
+        avatarPopupWithForm.closePopup();
       })
       .catch(err => {
         console.error(err);
@@ -84,14 +84,14 @@ const userInfo = new UserInfo({
 });
 
 // Создание экземпляра класса, отвечающего за попап с формой редактирования профиля
-const ProfilePopupWithForm = new PopupWithForm({
+const profilePopupWithForm = new PopupWithForm({
   popupSelector: '.popup_profile-edit',
   formSubmit: () => {
     profileButton.textContent = 'Сохранение...';
     api.sendProfileData(nameInput.value, descriptionInput.value)
       .then((res) => {
         userInfo.setUserInfo(res);
-        ProfilePopupWithForm.closePopup();
+        profilePopupWithForm.closePopup();
       })
       .catch(err => {
         console.error(err);
@@ -103,14 +103,14 @@ const ProfilePopupWithForm = new PopupWithForm({
 });
 
 // Создание экземпляра класса, отвечающий за попап с формой добавления новой карточки
-const CardPopupWithForm = new PopupWithForm({
+const cardPopupWithForm = new PopupWithForm({
   popupSelector: '.popup_add-picture',
   formSubmit: () => {
     cardButton.textContent = 'Создание...';
     api.sendCard(titleInput.value, linkInput.value)
       .then((res) => {
         cardsList.addItem(createCard(res));
-        CardPopupWithForm.closePopup();
+        cardPopupWithForm.closePopup();
       })
       .catch(err => {
         console.error(err);
@@ -124,27 +124,27 @@ const CardPopupWithForm = new PopupWithForm({
 // Добавление событий на попап с созданием новой карточки
 profileAddButton.addEventListener('click', function () {
   cardFormValidator.toggleButtonState();
-  CardPopupWithForm.openPopup();
+  cardPopupWithForm.openPopup();
 });
-CardPopupWithForm.setEventListeners();
+cardPopupWithForm.setEventListeners();
 
 // Добавление событий на попап с редактированием профиля
 profileEditButton.addEventListener('click', function () {
-  ProfilePopupWithForm.openPopup();
+  profilePopupWithForm.openPopup();
   profileDescriptionFormValidator.toggleButtonState();
 
   const info = userInfo.getUserInfo();
   nameInput.value = info.name;
   descriptionInput.value = info.about;
 });
-ProfilePopupWithForm.setEventListeners();
+profilePopupWithForm.setEventListeners();
 
 // Добавление событий на попап с обновления аватара
 avatarEditButton.addEventListener('click', function () {
   profileAvatarFormValidator.toggleButtonState();
-  AvatarPopupWithForm.openPopup();
+  avatarPopupWithForm.openPopup();
 });
-AvatarPopupWithForm.setEventListeners();
+avatarPopupWithForm.setEventListeners();
 
 // Первоначальное заполнение данных с сервера
 Promise.all([api.getUserData(), api.fillCards()])

@@ -1,15 +1,3 @@
-//import {myUserId} from './constants.js';
-
-// import Api from "./api.js";
-
-// const api = new Api({
-//   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-15',
-//   headers: {
-//     authorization: '50cb73c3-cd63-4207-b16a-8317dc26240b',
-//     'Content-Type': 'application/json'
-//   }
-// });
-
 export default class Card {
   constructor({data, myUserId, cardSelector, handleCardClick, api}) {
     this._name = data.name;
@@ -92,20 +80,22 @@ export default class Card {
     this._likeBtn.addEventListener('click', (evt) => {
       if (evt.target.classList.contains('elements_like_active')) {
         this._api.toggleLike('DELETE', this._cardId)
-          .then(() => {
+          .then((res) => {
             evt.target.classList.toggle('elements_like_active');
             this._likes -= 1;
-            this._likesNumber.textContent = this._likes;
+            //this._likesNumber.textContent = this._likes;
+            this._likesNumber.textContent = res.likes.length;
           })
           .catch(err => {
             console.error(err);
           })
       } else {
         this._api.toggleLike('PUT', this._cardId)
-          .then(() => {
+          .then((res) => {
             evt.target.classList.toggle('elements_like_active');
             this._likes += 1;
-            this._likesNumber.textContent = this._likes;
+            //this._likesNumber.textContent = this._likes;
+            this._likesNumber.textContent = res.likes.length;
           })
           .catch(err => {
             console.error(err);
